@@ -1,33 +1,51 @@
-// assets/js/home.js
-
 const images = [
-  'Scar_Mk17_LB_Aride.jpg',
-  'Scar_Mk17_LB_Roche.jpg',
-  'Scar_Mk17_LB_Sable.jpg',
-  'sniper-banner.jpg',
+  'terrain_1.jpg',
+  'terrain_2.jpg',
+  'terrain_3.jpg',
+  'terrain_4.jpg',
+  'terrain_5.jpg',
+  'terrain_6.jpg',
+  'terrain_7.jpg',
+  'terrain_8.jpg',
+  'terrain_9.jpg',
+  'terrain_10.jpg',
   'terrain_11.jpg'
 ];
 
-// Récupérer l'URL du thème passé via PHP
 const themeUrl = wolfsoftData.themeUrl + '/assets/images/';
 const bg = document.getElementById('background-rotator');
+const bgNext = document.getElementById('background-rotator-next');
 
 let index = Math.floor(Math.random() * images.length);
 
-function setBackground(i) {
-  bg.style.opacity = 0;
+// Affiche la première image
+bg.style.backgroundImage = `url(${themeUrl + images[index]})`;
+
+function nextImage() {
+  // Calcule l'index suivant
+  const nextIndex = (index + 1) % images.length;
+
+  // Prépare la prochaine image au-dessus, invisible
+  bgNext.style.backgroundImage = `url(${themeUrl + images[nextIndex]})`;
+  bgNext.style.transition = 'opacity 1s ease-in-out';
+  bgNext.style.opacity = 0;
+
+  // Lance le fondu
   setTimeout(() => {
-    bg.style.backgroundImage = `url(${themeUrl + images[i]})`;
-    bg.style.opacity = 1;
-  }, 1000);
+    bgNext.style.opacity = 1;
+  }, 20);
+
+  // Quand le fondu est fini, swap les images et cache le calque du dessus, puis prépare le prochain cycle
+  setTimeout(() => {
+    bg.style.backgroundImage = bgNext.style.backgroundImage;
+    bgNext.style.opacity = 0;
+    index = nextIndex;
+    setTimeout(nextImage, 10000); // Relance la boucle après 10s
+  }, 1020);
 }
 
-setBackground(index);
-
-setInterval(() => {
-  index = (index + 1) % images.length;
-  setBackground(index);
-}, 10000);
+// Lance la boucle après 10s sur la première image
+setTimeout(nextImage, 10000);
 
 // === BURGER MENU ===
 document.addEventListener("DOMContentLoaded", () => {
