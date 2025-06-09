@@ -1,0 +1,13 @@
+*.log
+*.sql
+*.zip
+*.tar.gz
+node_modules/
+vendor/
+.env
+.DS_Store
+.idea/
+.vscode/
+*.bak
+Thumbs.db
+*.swp
