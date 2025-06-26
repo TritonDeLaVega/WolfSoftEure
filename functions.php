@@ -1,5 +1,4 @@
 <?php
-// Charger les styles du thème parent et du thème enfant
 add_action('wp_enqueue_scripts', function () {
     // Style parent
     wp_enqueue_style(
@@ -11,7 +10,7 @@ add_action('wp_enqueue_scripts', function () {
     wp_enqueue_style(
         'child-style',
         get_stylesheet_directory_uri() . '/assets/css/main.css',
-        array('parent-style') // Important : dépend du style parent
+        array('parent-style')
     );
 
     // JS spécifique à la page d'accueil
@@ -24,9 +23,8 @@ add_action('wp_enqueue_scripts', function () {
             true
         );
 
-        // Passer l'URL du thème au script home.js
         wp_localize_script('wolfsofteure-home', 'wolfsoftData', array(
             'themeUrl' => get_stylesheet_directory_uri()
         ));
     }
-});
+}, 10);
