@@ -13,6 +13,13 @@ add_action('wp_enqueue_scripts', function () {
         array('parent-style')
     );
 
+    // Style spécifique à la page Terrain
+    wp_enqueue_style(
+        'terrain-style',
+        get_stylesheet_directory_uri() . '/assets/css/terrain.css',
+        array('child-style')
+    );
+
     // JS spécifique à la page d'accueil
     if (is_front_page()) {
         wp_enqueue_script(

@@ -31,7 +31,7 @@
             <li><a href="#">Parties</a></li>
             <li><a href="#">Photos</a></li>
             <li><a href="#">Postuler</a></li>
-            <li><a href="#">Terrain</a></li>
+            <li><a href="<?php echo get_permalink(get_page_by_path('terrain')); ?>">Terrain</a></li>
             <li><a href="#">Boutique</a></li>
             <li><a href="#">Nouveau compte</a></li>
             <li><a href="#">Se connecter</a></li>
