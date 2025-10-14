@@ -1,8 +1,17 @@
 <?php
 /* Template Name: Terrain */
+
 get_header();
 ?>
-
+<style>
+    .terrain-container {
+        background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/terrain_11.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        padding: 60px 20px;
+    }
+</style>
 <div class="terrain-container">
     <div class="terrain-image zoom-wrapper">
         <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/terrainMaps.png" alt="Carte du terrain" class="zoom-target">
