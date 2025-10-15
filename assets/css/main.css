@@ -45,7 +45,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 2rem;
-    color: #86c1ff;
+    color: #ffffff;
     text-align: center;
     z-index: 3;
     margin: 0;
@@ -65,7 +65,7 @@ body {
 
 /* === HEADER === */
 .main-header {
-    background: white;
+    background: #0242878c;
     padding: 0 20px;
     display: flex;
     justify-content: space-between;
@@ -120,7 +120,7 @@ body {
     position: absolute;
     width: 3px;
     height: 3px;
-    background: #000;
+    background: #66ff00;
     border-radius: 50%;
     z-index: 20;
     pointer-events: none;
@@ -217,7 +217,7 @@ body.admin-bar .main-header {
 
 /* Footer */
 .site-footer {
-    background: #fff;
+    background: #024287;
     height: 3rem;
     display: flex;
     align-items: center;
@@ -233,7 +233,7 @@ body.admin-bar .main-header {
 .site-footer a {
     background: none;
     border: none;
-    color: #222;
+    color: #ffffff;
     cursor: pointer;
     font-size: 1rem;
     text-decoration: none;
@@ -246,11 +246,11 @@ body.admin-bar .main-header {
 .site-footer button:hover,
 .site-footer a:hover {
     transform: scale(1.15);
-    color: #000;
+    color: #ffffff;
 }
 
 .site-footer .footer-rights {
-    color: #222;
+    color: #ffffff;
     margin-left: 1rem;
 }
 
