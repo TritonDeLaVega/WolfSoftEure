@@ -45,7 +45,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 2rem;
-    color: #ffffff;
+    color: #0099ff;
     text-align: center;
     z-index: 3;
     margin: 0;
@@ -256,7 +256,7 @@ body.admin-bar .main-header {
 
 /* Modale */
 .modal {
-    display: none;
+    display: none; /* ← reste bien cachée au départ */
     position: fixed;
     z-index: 200;
     left: 0;
@@ -264,8 +264,16 @@ body.admin-bar .main-header {
     width: 100vw;
     height: 100vh;
     background: rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+    padding: 40px 20px;
+    box-sizing: border-box;
+}
+
+/* Classe à ajouter dynamiquement pour afficher */
+.modal.active {
+    display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .modal-content {
