@@ -1,14 +1,39 @@
+/* === Wrapper pour image + texte côte à côte === */
+.terrain-wrapper {
+    position: relative;
+    z-index: 3; /* au-dessus du fond rotatif */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+    padding: 120px 60px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+
+/* === Image de la carte === */
+.terrain-image {
+    width: 45%;
+}
+
+.terrain-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
 /* === Texte descriptif pour la page Terrain === */
 .terrain-text {
-    width: 100%;
-    max-width: 800px;
-    margin: 40px auto;
+    width: 50%;
     font-family: 'Arial', sans-serif;
     font-size: 1.1rem;
     line-height: 1.7;
-    color: #333;
-    background-color: #f9f9f9;
-    padding: 20px;
+    color: #ffffff;
+    background-color: #0242878c;
+    padding: 13px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -45,6 +70,17 @@
 
 /* === Responsive === */
 @media screen and (max-width: 768px) {
+    .terrain-wrapper {
+        flex-direction: column;
+        align-items: center;
+        padding: 30px 15px;
+    }
+
+    .terrain-image,
+    .terrain-text {
+        width: 100%;
+    }
+
     .terrain-text {
         padding: 15px;
     }
