@@ -36,16 +36,24 @@ html, body {
     background-position: center;
     top: 0;
     left: 0;
-    z-index: 1;
+    opacity: 0;
     transition: opacity 1s ease-in-out;
-    opacity: 1;
     pointer-events: none;
+    z-index: 1;
 }
 
-#background-rotator-next {
+/* Image visible */
+.background.active {
+    opacity: 1;
     z-index: 2;
-    opacity: 0;
 }
+
+/* Image qui était visible juste avant */
+.background.previous {
+    opacity: 1; /* reste visible tant que la nouvelle n’est pas prête */
+    z-index: 1;
+}
+
 
 /* Logo centré */
 .logo-centered {
@@ -122,6 +130,14 @@ body.admin-bar .main-header {
 .scar-container {
     position: relative;
     display: inline-block;
+}
+.canon-marker {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    right: 0;      /* extrémité droite du SCAR */
+    top: 30%;      /* ajuste finement la hauteur du canon */
+    pointer-events: none;
 }
 
 .scar-img {

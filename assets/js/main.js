@@ -2,16 +2,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const themeUrl = wolfsoftMain.themeUrl + '/assets/images/';
     const soundUrl = wolfsoftMain.themeUrl + '/assets/sounds/';
 
-    // === SCAR ANIMATION (desktop uniquement) ===
+    // === SCAR ANIMATION (toujours actif) ===
     const scarContainer = document.querySelector('.scar-container');
     const scarImg = document.querySelector('.scar-img');
     const burger = document.getElementById("burger-button");
-    const isMobile = window.innerWidth < 768;
 
     // Un seul objet Audio réutilisé pour éviter les ratés
     const scarAudio = new Audio(wolfsoftMain.themeUrl + '/assets/sounds/single-shot-sig-552-airsoft.wav');
 
-    if (scarContainer && scarImg && burger && !isMobile) {
+    if (scarContainer && scarImg && burger) {
 
         function tirerBilleRafale() {
             let tirs = 0;
@@ -20,13 +19,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 const bille = document.createElement('div');
                 bille.className = 'bille';
 
-                // === POSITION DYNAMIQUE DU CANON ===
-                const scarRect = scarImg.getBoundingClientRect();
+                // === POSITION EXACTE DU CANON ===
+                const canon = scarContainer.querySelector('.canon-marker');
+                const canonRect = canon.getBoundingClientRect();
                 const containerRect = scarContainer.getBoundingClientRect();
 
-                // Position exacte du canon (extrémité droite du SCAR)
-                const canonX = scarRect.right - containerRect.left;
-                const canonY = scarRect.top - containerRect.top + scarRect.height * 0.45;
+                const canonX = canonRect.left - containerRect.left;
+                const canonY = canonRect.top - containerRect.top;
 
                 bille.style.left = `${canonX}px`;
                 bille.style.top = `${canonY}px`;
@@ -35,8 +34,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 // === POSITION DU BURGER ===
                 const burgerRect = burger.getBoundingClientRect();
+                const scarRect = scarImg.getBoundingClientRect();
 
-                // Tir strictement horizontal → pas de plongée
+                // Tir strictement horizontal
                 const distanceX = burgerRect.left - scarRect.right;
                 const distanceY = 0;
 
@@ -51,10 +51,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 bille.style.transform = `translate(${distanceX}px, ${distanceY}px)`;
 
-                // === DISPARITION AU CONTACT VISUEL DU BURGER ===
-                setTimeout(() => {
-                    bille.remove();
-                }, 700);
+                // === DISPARITION ===
+                setTimeout(() => bille.remove(), 700);
 
                 // === RECUL DU SCAR ===
                 scarImg.classList.remove('recoil');
@@ -62,15 +60,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 scarImg.classList.add('recoil');
                 setTimeout(() => scarImg.classList.remove('recoil'), 150);
 
-                // === SON À CHAQUE TIR ===
+                // === SON ===
                 try {
                     scarAudio.currentTime = 0;
                     scarAudio.play();
-                } catch (e) {
-                    // certains navigateurs peuvent bloquer occasionnellement, on ignore
-                }
+                } catch (e) { }
 
-                // === RAFALE DE 3 TIRS ===
+                // === RAFALE ===
                 tirs++;
                 if (tirs < 3) setTimeout(tirer, 100);
             }
@@ -204,7 +200,6 @@ document.addEventListener("DOMContentLoaded", () => {
         };
         contactForm.onsubmit = (e) => {
             e.preventDefault();
-            // Ici tu pourras brancher un vrai envoi plus tard
             alert('Message envoyé (simulation en local).');
             contactModal.classList.remove('active');
             contactForm.reset();

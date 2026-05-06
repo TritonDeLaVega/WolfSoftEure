@@ -14,22 +14,57 @@ document.addEventListener("DOMContentLoaded", () => {
     const themeUrl = wolfsoftHome.themeUrl + '/assets/images/';
     let index = Math.floor(Math.random() * images.length);
 
-    bg.style.backgroundImage = `url(${themeUrl + images[index]})`;
+    // === PRÉCHARGEMENT DES IMAGES ===
+    const loadedImages = [];
+    let loadedCount = 0;
 
-    function nextImage() {
-        const nextIndex = (index + 1) % images.length;
-        bgNext.style.backgroundImage = `url(${themeUrl + images[nextIndex]})`;
-        bgNext.style.opacity = 0;
+    images.forEach((img, i) => {
+        const image = new Image();
+        image.src = themeUrl + img;
+        image.onload = () => {
+            loadedImages[i] = image;
+            loadedCount++;
+        };
+    });
 
-        setTimeout(() => { bgNext.style.opacity = 1; }, 20);
-
-        setTimeout(() => {
-            bg.style.backgroundImage = bgNext.style.backgroundImage;
-            bgNext.style.opacity = 0;
-            index = nextIndex;
-            setTimeout(nextImage, 5000);
-        }, 1020);
+    // Attendre que toutes les images soient chargées
+    function waitForPreload() {
+        if (loadedCount === images.length) {
+            startSlider();
+        } else {
+            requestAnimationFrame(waitForPreload);
+        }
     }
 
-    setTimeout(nextImage, 5000);
+    waitForPreload();
+
+    // === SLIDER ===
+    function startSlider() {
+        bg.style.backgroundImage = `url(${themeUrl + images[index]})`;
+        bg.classList.add("active");
+
+        function nextImage() {
+            const nextIndex = (index + 1) % images.length;
+
+            // L'image est déjà chargée → aucun flash possible
+            bgNext.style.backgroundImage = `url(${themeUrl + images[nextIndex]})`;
+
+            // Fade-in de la nouvelle image
+            bgNext.classList.add("active");
+
+            setTimeout(() => {
+                // On remplace l'image principale
+                bg.style.backgroundImage = bgNext.style.backgroundImage;
+
+                // On remet bgNext invisible
+                bgNext.classList.remove("active");
+
+                index = nextIndex;
+
+                setTimeout(nextImage, 5000);
+            }, 1000);
+        }
+
+        setTimeout(nextImage, 5000);
+    }
 });
