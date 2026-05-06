@@ -1,28 +1,37 @@
-/* assets/css/main.css */
-
-html,
-body {
+/* ===========================
+   RESET & GLOBAL
+=========================== */
+html, body {
     margin: 0;
     padding: 0;
-    height: 100%;
+    min-height: 100%;
     font-family: sans-serif;
     overflow-x: hidden;
-    width: 100vw;
-    max-width: 100vw;
-
 }
 
+/* Compensation du header fixe */
+.site-main {
+    padding-top: 60px;
+}
+
+/* ===========================
+   HERO
+=========================== */
 .hero {
     position: relative;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
+    overflow: hidden;
+    margin-top: -60px; /* remonte le hero sous le header */
+    padding-top: 60px; /* compense pour ne pas cacher le contenu */
 }
 
-/* === BACKGROUND ROTATOR === */
+/* Background rotator */
 .background {
     position: absolute;
     width: 100%;
     height: 100%;
+    min-height: 100vh;
     background-size: cover;
     background-position: center;
     top: 0;
@@ -38,72 +47,70 @@ body {
     opacity: 0;
 }
 
-.hero-subtitle {
-    position: absolute;
-    top: 78%;
-    /* Augmente la valeur pour plus d'espace sous le logo */
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 2rem;
-    color: #0099ff;
-    text-align: center;
-    z-index: 3;
-    margin: 0;
-    font-weight: bold;
-    text-shadow: 5px 5px 5px rgba(0, 0, 0, 15);
-}
-
+/* Logo centré */
 .logo-centered {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 300px;
-    z-index: 2;
+    z-index: 3;
 }
 
+/* Sous-titre */
+.hero-subtitle {
+    position: absolute;
+    top: 78%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    color: #0099ff;
+    text-align: center;
+    z-index: 4;
+    margin: 0;
+    font-weight: bold;
+    text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.15);
+}
 
-/* === HEADER === */
+/* ===========================
+   HEADER
+=========================== */
 .main-header {
     background: #0242878c;
     padding: 0 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 10;
+    z-index: 20;
     position: fixed;
     width: 100%;
     top: 0;
     height: 60px;
 }
 
+body.admin-bar .main-header {
+    top: 32px;
+}
+
+@media screen and (max-width: 782px) {
+    body.admin-bar .main-header {
+        top: 46px;
+    }
+}
+
 .site-title {
-    position: relative;
-    z-index: 1;
     font-family: 'poppins', sans-serif;
     font-size: 2rem;
     text-decoration: none;
     color: transparent;
-    /* texte transparent */
     background: #024287;
-    /* bleu foncé */
     font-weight: bold;
     font-style: italic;
     padding: 0.3em 1.2em;
-    display: inline-block;
     border-radius: 2em;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
     -webkit-text-stroke: 1px #fff;
-    /* contour blanc pour Chrome/Safari */
     text-stroke: 1px #fff;
-}
-
-.scar-img {
-    display: inline-block;
-    vertical-align: middle;
-    max-height: 55px;
-    margin-left: 1rem;
-    width: auto;
 }
 
 .header-left {
@@ -111,9 +118,15 @@ body {
     align-items: center;
 }
 
+/* SCAR animation */
 .scar-container {
     position: relative;
     display: inline-block;
+}
+
+.scar-img {
+    max-height: 55px;
+    margin-left: 1rem;
 }
 
 .bille {
@@ -122,7 +135,7 @@ body {
     height: 3px;
     background: #66ff00;
     border-radius: 50%;
-    z-index: 20;
+    z-index: 30;
     pointer-events: none;
 }
 
@@ -131,19 +144,12 @@ body {
 }
 
 @keyframes recoil {
-    0% {
-        transform: translateX(0);
-    }
-
-    30% {
-        transform: translateX(10px);
-    }
-
-    100% {
-        transform: translateX(0);
-    }
+    0% { transform: translateX(0); }
+    30% { transform: translateX(10px); }
+    100% { transform: translateX(0); }
 }
 
+/* Burger */
 .burger-menu {
     width: 30px;
     cursor: pointer;
@@ -151,16 +157,22 @@ body {
     flex-direction: column;
     justify-content: space-between;
     height: 20px;
+    background-color: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .burger-menu span {
-    background: #000000;
+    background: #000;
     height: 3px;
     border-radius: 2px;
     transition: all 0.3s ease;
 }
 
-/* === FULLSCREEN MENU === */
+/* ===========================
+   FULLSCREEN MENU
+=========================== */
 .fullscreen-menu {
     position: fixed;
     top: 0;
@@ -168,12 +180,19 @@ body {
     width: 100%;
     height: 100%;
     background: #ffffff;
-    color: #fff;
-    display: none;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease;
+}
+
+.fullscreen-menu.active {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .fullscreen-menu ul {
@@ -195,7 +214,6 @@ body {
 
 .fullscreen-menu a:hover {
     color: #024287;
-    /* bleu foncé */
 }
 
 #close-menu {
@@ -203,19 +221,57 @@ body {
     top: 40px;
     right: 40px;
     font-size: 3rem;
-    color: rgb(0, 0, 0);
     background: none;
     border: none;
     cursor: pointer;
 }
 
-/* Décale le header sous la barre d’admin WordPress */
-body.admin-bar .main-header {
-    top: 32px;
-    /* hauteur de la barre admin sur desktop */
+/* ===========================
+   MODALES
+=========================== */
+.modal {
+    position: fixed;
+    z-index: 200;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease;
 }
 
-/* Footer */
+.modal.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    min-width: 320px;
+    max-width: 90vw;
+    margin: auto;
+    position: relative;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+/* ===========================
+   FOOTER
+=========================== */
 .site-footer {
     background: #024287;
     height: 3rem;
@@ -239,135 +295,34 @@ body.admin-bar .main-header {
     text-decoration: none;
     margin: 0 0.5rem;
     transition: transform 0.2s cubic-bezier(.4, 2, .6, 1), color 0.2s;
-    outline: none;
-    box-shadow: none;
 }
 
 .site-footer button:hover,
 .site-footer a:hover {
     transform: scale(1.15);
-    color: #ffffff;
 }
 
-.site-footer .footer-rights {
-    color: #ffffff;
-    margin-left: 1rem;
+/* ===========================
+   RESPONSIVE
+=========================== */
+@media (max-width: 768px) {
+    .logo-centered {
+        width: 200px;
+    }
+
+    .hero-subtitle {
+        font-size: 1.4rem;
+        top: 75%;
+    }
+
+    .site-footer {
+        flex-direction: column;
+        height: auto;
+        padding: 0.5rem 1rem;
+        text-align: center;
+    }
 }
 
-/* Modale */
-.modal {
-    display: none; /* ← reste bien cachée au départ */
-    position: fixed;
-    z-index: 200;
-    left: 0;
-    top: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.5);
-    overflow-y: auto;
-    padding: 40px 20px;
-    box-sizing: border-box;
-}
-
-/* Classe à ajouter dynamiquement pour afficher */
-.modal.active {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-}
-
-.modal-content {
-    background: #fff;
-    padding: 2rem;
-    border-radius: 8px;
-    min-width: 320px;
-    max-width: 90vw;
-    position: relative;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
-}
-
-.close-modal {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 2rem;
-    color: #333;
-    cursor: pointer;
-}
-
-#contact-form label {
-    display: block;
-    margin-top: 1rem;
-    margin-bottom: 0.2rem;
-}
-
-#contact-form input,
-#contact-form textarea {
-    width: 100%;
-    padding: 0.5rem;
-    margin-bottom: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-#contact-form button {
-    margin-top: 1rem;
-    background: #007bff;
-    color: #fff;
-    border: none;
-    padding: 0.5rem 1.5rem;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-/* Formulaire d'inscription */
-#register-form label {
-    display: block;
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    color: #222;
-}
-
-#register-form input,
-#register-form select {
-    width: 100%;
-    padding: 0.5rem;
-    margin-bottom: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
-    box-sizing: border-box;
-}
-
-#register-form button[type="submit"] {
-    margin-top: 1rem;
-    background: #2b7a78;
-    color: #fff;
-    border: none;
-    padding: 0.7rem 1.5rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 1.1rem;
-    transition: background 0.2s;
-    grid-column: 1 / span 2;
-}
-
-#register-form button[type="submit"]:hover {
-    background: #205c5c;
-}
-
-#register-form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem 2rem;
-}
-
-body {
-    overflow-x: hidden !important;
-}
-
-/* Responsive : une colonne sur mobile */
 @media (max-width: 600px) {
     #register-form {
         grid-template-columns: 1fr;
@@ -377,10 +332,67 @@ body {
         grid-column: 1;
     }
 }
+/* ===========================
+   HEADER COMPACT POUR MOBILE
+=========================== */
+@media (max-width: 768px) {
 
-@media screen and (max-width: 782px) {
-    body.admin-bar .main-header {
-        top: 46px;
-        /* hauteur de la barre admin sur mobile/tablette */
+    .main-header {
+        height: 50px;
+        padding: 0 10px;
+    }
+
+    .site-title {
+        font-size: 1.2rem;
+        padding: 0.2em 0.8em;
+        -webkit-text-stroke: 0.7px #fff;
+        text-stroke: 0.7px #fff;
+        white-space: nowrap; /* empêche la coupure en 3 lignes */
+    }
+
+    .scar-img {
+        max-height: 35px; /* réduit le SCAR */
+        margin-left: 0.5rem;
+    }
+
+    .burger-menu {
+        width: 26px;
+        height: 18px;
+    }
+
+    .burger-menu span {
+        height: 2px;
+    }
+}
+/* ===========================
+   HEADER ULTRA COMPACT < 360px
+=========================== */
+@media (max-width: 360px) {
+
+    .main-header {
+        height: 45px;
+        padding: 0 8px;
+    }
+
+    .site-title {
+        font-size: 0.9rem;
+        padding: 0.15em 0.6em;
+        -webkit-text-stroke: 0.5px #fff;
+        text-stroke: 0.5px #fff;
+        white-space: nowrap;
+    }
+
+    .scar-img {
+        max-height: 28px;
+        margin-left: 0.3rem;
+    }
+
+    .burger-menu {
+        width: 22px;
+        height: 16px;
+    }
+
+    .burger-menu span {
+        height: 2px;
     }
 }

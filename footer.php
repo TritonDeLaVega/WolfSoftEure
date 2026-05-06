@@ -1,12 +1,14 @@
 <footer class="site-footer">
-    <button id="contact-btn">Contact</button>
-    <a href="http://wolf-soft-eure.local/politique-de-confidentialite/" target="_blank">Politique de confidentialité</a>
+    <button id="contact-btn" aria-haspopup="dialog">Contact</button>
+    <a href="<?php echo esc_url(get_permalink(get_page_by_path('politique-de-confidentialite'))); ?>" target="_blank">
+        Politique de confidentialité
+    </a>
     <span class="footer-rights">Tous droits réservés.</span>
 </footer>
 
 <!-- Modale de contact -->
-<div id="contact-modal" class="modal">
-    <div class="modal-content">
+<div id="contact-modal" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true">
         <span class="close-modal" id="close-modal">&times;</span>
         <h2>Contact</h2>
         <form id="contact-form">

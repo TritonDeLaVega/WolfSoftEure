@@ -1,80 +1,88 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const themeUrl = wolfsoftData.themeUrl + '/assets/images/';
-    const soundUrl = wolfsoftData.themeUrl + '/assets/sounds/';
+    const themeUrl = wolfsoftMain.themeUrl + '/assets/images/';
+    const soundUrl = wolfsoftMain.themeUrl + '/assets/sounds/';
 
-    // === ROTATE BACKGROUND ===
-    const bg = document.getElementById('background-rotator');
-    const bgNext = document.getElementById('background-rotator-next');
-
-    if (bg && bgNext) {
-        const images = [
-            'terrain_1.jpg', 'terrain_2.jpg', 'terrain_3.jpg',
-            'terrain_4.jpg', 'terrain_5.jpg', 'terrain_6.jpg',
-            'terrain_7.jpg', 'terrain_8.jpg', 'terrain_9.jpg',
-            'terrain_10.jpg', 'terrain_11.jpg', 'BannerWseOldSchool.jpg'
-        ];
-        let index = Math.floor(Math.random() * images.length);
-        bg.style.backgroundImage = `url(${themeUrl + images[index]})`;
-
-        function nextImage() {
-            const nextIndex = (index + 1) % images.length;
-            bgNext.style.backgroundImage = `url(${themeUrl + images[nextIndex]})`;
-            bgNext.style.opacity = 0;
-            setTimeout(() => { bgNext.style.opacity = 1; }, 20);
-            setTimeout(() => {
-                bg.style.backgroundImage = bgNext.style.backgroundImage;
-                bgNext.style.opacity = 0;
-                index = nextIndex;
-                setTimeout(nextImage, 5000);
-            }, 1020);
-        }
-
-        setTimeout(nextImage, 5000);
-    }
-
-    // === SCAR ANIMATION ===
+    // === SCAR ANIMATION (desktop uniquement) ===
     const scarContainer = document.querySelector('.scar-container');
     const scarImg = document.querySelector('.scar-img');
     const burger = document.getElementById("burger-button");
+    const isMobile = window.innerWidth < 768;
 
-    if (scarContainer && scarImg && burger) {
+    // Un seul objet Audio réutilisé pour éviter les ratés
+    const scarAudio = new Audio(wolfsoftMain.themeUrl + '/assets/sounds/single-shot-sig-552-airsoft.wav');
+
+    if (scarContainer && scarImg && burger && !isMobile) {
+
         function tirerBilleRafale() {
             let tirs = 0;
+
             function tirer() {
                 const bille = document.createElement('div');
                 bille.className = 'bille';
-                bille.style.left = '235px';
-                bille.style.top = '18px';
+
+                // === POSITION DYNAMIQUE DU CANON ===
+                const scarRect = scarImg.getBoundingClientRect();
+                const containerRect = scarContainer.getBoundingClientRect();
+
+                // Position exacte du canon (extrémité droite du SCAR)
+                const canonX = scarRect.right - containerRect.left;
+                const canonY = scarRect.top - containerRect.top + scarRect.height * 0.45;
+
+                bille.style.left = `${canonX}px`;
+                bille.style.top = `${canonY}px`;
+
                 scarContainer.appendChild(bille);
 
-                const containerRect = scarContainer.getBoundingClientRect();
+                // === POSITION DU BURGER ===
                 const burgerRect = burger.getBoundingClientRect();
-                const distance = burgerRect.left - containerRect.left - 235;
 
-                bille.animate([
-                    { transform: 'translateX(0)' },
-                    { transform: `translateX(${distance}px)` }
-                ], { duration: 700, easing: 'linear' });
-                bille.style.transform = `translateX(${distance}px)`;
+                // Tir strictement horizontal → pas de plongée
+                const distanceX = burgerRect.left - scarRect.right;
+                const distanceY = 0;
 
-                const audio = new Audio(soundUrl + 'single-shot-sig-552-airsoft.wav');
-                audio.currentTime = 0;
-                audio.play();
+                // === ANIMATION DE LA BILLE ===
+                bille.animate(
+                    [
+                        { transform: 'translate(0, 0)' },
+                        { transform: `translate(${distanceX}px, ${distanceY}px)` }
+                    ],
+                    { duration: 700, easing: 'linear' }
+                );
 
+                bille.style.transform = `translate(${distanceX}px, ${distanceY}px)`;
+
+                // === DISPARITION AU CONTACT VISUEL DU BURGER ===
+                setTimeout(() => {
+                    bille.remove();
+                }, 700);
+
+                // === RECUL DU SCAR ===
                 scarImg.classList.remove('recoil');
                 void scarImg.offsetWidth;
                 scarImg.classList.add('recoil');
-                setTimeout(() => { scarImg.classList.remove('recoil'); }, 150);
-                setTimeout(() => { bille.remove(); }, 700);
+                setTimeout(() => scarImg.classList.remove('recoil'), 150);
 
+                // === SON À CHAQUE TIR ===
+                try {
+                    scarAudio.currentTime = 0;
+                    scarAudio.play();
+                } catch (e) {
+                    // certains navigateurs peuvent bloquer occasionnellement, on ignore
+                }
+
+                // === RAFALE DE 3 TIRS ===
                 tirs++;
                 if (tirs < 3) setTimeout(tirer, 100);
             }
+
             tirer();
         }
 
-        setInterval(tirerBilleRafale, 2000);
+        // Tir toutes les 8 secondes
+        setInterval(tirerBilleRafale, 8000);
     }
+
+
 
     // === BURGER MENU ===
     const menu = document.getElementById("fullscreen-menu");
@@ -82,10 +90,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (burger && menu && closeBtn) {
         burger.addEventListener("click", () => {
-            menu.style.display = "flex";
+            menu.classList.add("active");
+            document.body.style.overflow = "hidden";
         });
+
         closeBtn.addEventListener("click", () => {
-            menu.style.display = "none";
+            menu.classList.remove("active");
+            document.body.style.overflow = "";
+        });
+
+        menu.addEventListener("click", (e) => {
+            if (e.target === menu) {
+                menu.classList.remove("active");
+                document.body.style.overflow = "";
+            }
         });
     }
 
@@ -96,7 +114,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const registerForm = document.getElementById('register-form');
 
     if (newAccountBtn && registerModal && closeRegisterModal && registerForm) {
-        newAccountBtn.onclick = () => {
+        newAccountBtn.onclick = (e) => {
+            e.preventDefault();
             registerModal.classList.add('active');
         };
 
@@ -108,15 +127,18 @@ document.addEventListener("DOMContentLoaded", () => {
             e.preventDefault();
             const formData = new FormData(registerForm);
             formData.append('action', 'wse_register');
-            fetch(wolfsoftData.ajaxUrl, {
+
+            fetch(wolfsoftMain.ajaxUrl, {
                 method: 'POST',
                 body: formData
             })
                 .then(res => res.json())
                 .then(data => {
                     alert(data.message);
-                    registerModal.classList.remove('active');
-                    registerForm.reset();
+                    if (data.success) {
+                        registerModal.classList.remove('active');
+                        registerForm.reset();
+                    }
                 });
         };
 
@@ -127,7 +149,6 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     }
 
-
     // === MODALE CONNEXION ===
     const loginBtn = document.getElementById('login-btn');
     const loginModal = document.getElementById('login-modal');
@@ -137,13 +158,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (loginBtn && loginModal && closeLoginModal) {
         loginBtn.onclick = (e) => {
             e.preventDefault();
-            loginModal.style.display = 'flex';
+            loginModal.classList.add('active');
         };
         closeLoginModal.onclick = () => {
-            loginModal.style.display = 'none';
+            loginModal.classList.remove('active');
         };
         loginModal.onclick = (e) => {
-            if (e.target === loginModal) loginModal.style.display = 'none';
+            if (e.target === loginModal) loginModal.classList.remove('active');
         };
     }
 
@@ -152,7 +173,8 @@ document.addEventListener("DOMContentLoaded", () => {
             e.preventDefault();
             const formData = new FormData(loginForm);
             formData.append('action', 'wse_login');
-            fetch(wolfsoftData.ajaxUrl, {
+
+            fetch(wolfsoftMain.ajaxUrl, {
                 method: 'POST',
                 body: formData
             })
@@ -160,9 +182,35 @@ document.addEventListener("DOMContentLoaded", () => {
                 .then(data => {
                     alert(data.message);
                     if (data.success) {
-                        loginModal.style.display = 'none';
+                        loginModal.classList.remove('active');
+                        window.location.reload();
                     }
                 });
+        };
+    }
+
+    // === MODALE CONTACT ===
+    const contactBtn = document.getElementById('contact-btn');
+    const contactModal = document.getElementById('contact-modal');
+    const closeContactModal = document.getElementById('close-modal');
+    const contactForm = document.getElementById('contact-form');
+
+    if (contactBtn && contactModal && closeContactModal && contactForm) {
+        contactBtn.onclick = () => {
+            contactModal.classList.add('active');
+        };
+        closeContactModal.onclick = () => {
+            contactModal.classList.remove('active');
+        };
+        contactForm.onsubmit = (e) => {
+            e.preventDefault();
+            // Ici tu pourras brancher un vrai envoi plus tard
+            alert('Message envoyé (simulation en local).');
+            contactModal.classList.remove('active');
+            contactForm.reset();
+        };
+        contactModal.onclick = (e) => {
+            if (e.target === contactModal) contactModal.classList.remove('active');
         };
     }
 });

@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
-
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php wp_head(); ?>
 </head>
+<body <?php body_class(); ?>>
 
 <!-- Modale d'inscription -->
-<div class="modal" id="register-modal">
-    <div class="modal-content">
+<div class="modal" id="register-modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true">
         <span class="close-modal" id="close-register-modal">&times;</span>
         <h2>Inscription nouveau membre</h2>
         <form id="register-form">
@@ -43,8 +43,8 @@
 </div>
 
 <!-- Modale de connexion -->
-<div class="modal" id="login-modal">
-    <div class="modal-content">
+<div class="modal" id="login-modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true">
         <span class="close-modal" id="close-login-modal">&times;</span>
         <h2>Connexion utilisateur</h2>
         <form id="login-form">
@@ -55,33 +55,31 @@
     </div>
 </div>
 
-<body <?php body_class(); ?>>
-
-    <header class="main-header">
-        <div class="header-left">
-            <span class="cloud-bg-header">
-                <a href="<?php echo home_url(); ?>" class="site-title">Wolf Soft Eure</a>
-            </span>
-            <div class="scar-container" style="position: relative; display: inline-block;">
-                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/scar.png" alt="Scar" class="scar-img">
-            </div>
+<header class="main-header">
+    <div class="header-left">
+        <span class="cloud-bg-header">
+            <a href="<?php echo esc_url(home_url('/')); ?>" class="site-title">Wolf Soft Eure</a>
+        </span>
+        <div class="scar-container">
+            <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/images/scar.png'); ?>"
+                 alt="Scar" class="scar-img">
         </div>
-        <div class="burger-menu" id="burger-button">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </header>
+    </div>
+    <button class="burger-menu" id="burger-button" aria-label="Ouvrir le menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+</header>
 
-    <nav class="fullscreen-menu" id="fullscreen-menu">
-        <button id="close-menu">×</button>
-        <ul>
-            <li><a href="#">Parties</a></li>
-            <li><a href="#">Photos</a></li>
-            <li><a href="#">Postuler</a></li>
-            <li><a href="<?php echo get_permalink(get_page_by_path('terrain')); ?>">Terrain</a></li>
-            <li><a href="#">Boutique</a></li>
-            <li><a href="#" id="new-account-btn">Nouveau compte</a></li>
-            <li><a href="#" id="login-btn">Se connecter</a></li>
-        </ul>
-    </nav>
+<nav class="fullscreen-menu" id="fullscreen-menu">
+    <button id="close-menu" aria-label="Fermer le menu">×</button>
+    <ul>
+        <li><a href="#">Parties</a></li>
+        <li><a href="#">Photos</a></li>
+        <li><a href="<?php echo esc_url(get_permalink(get_page_by_path('terrain'))); ?>">Terrain</a></li>
+        <li><a href="#">Boutique</a></li>
+        <li><a href="#" id="new-account-btn">Nouveau compte</a></li>
+        <li><a href="#" id="login-btn">Se connecter</a></li>
+    </ul>
+</nav>
