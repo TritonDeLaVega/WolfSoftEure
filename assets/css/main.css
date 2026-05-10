@@ -7,78 +7,94 @@ html, body {
     min-height: 100%;
     font-family: sans-serif;
     overflow-x: hidden;
+    background: transparent !important;
 }
 
-/* Compensation du header fixe */
-.site-main {
-    padding-top: 60px;
+main, .site-content, .page-content {
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 /* ===========================
-   HERO
+   HERO HOME (centrage parfait)
 =========================== */
-.hero {
+body.home .site-main {
     position: relative;
-    width: 100%;
-    height: 100vh;
-    min-height: 100vh;
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
+    height: calc(100vh - 60px); /* 100vh - hauteur du header */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* centre verticalement */
+    align-items: center;
+    text-align: center;
 }
 
-/* Background rotator */
+/* Phrase sous le logo */
+body.home .home-subtitle {
+    margin-top: 20px;
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 600;
+    text-shadow:
+        0 0 10px #00aaff,
+        0 0 20px #00aaff,
+        0 0 30px #00aaff,
+        0 0 40px #0099ff,
+        0 0 50px #0099ff;
+    white-space: nowrap;
+}
+
+/* Masquer ailleurs */
+body:not(.home) .home-subtitle {
+    display: none;
+}
+
+/* Responsive HERO */
+@media (max-width: 768px) {
+    body.home .site-main {
+        height: calc(100vh - 50px); /* header mobile */
+    }
+    body.home .home-subtitle {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 480px) {
+    body.home .site-main {
+        height: calc(100vh - 45px);
+    }
+    body.home .home-subtitle {
+        font-size: 1.2rem;
+        white-space: normal;
+        width: 90%;
+    }
+}
+
+/* ===========================
+   SLIDER GLOBAL
+=========================== */
+.background-slider {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
 .background {
     position: absolute;
     width: 100%;
     height: 100%;
-    min-height: 100vh;
     background-size: cover;
     background-position: center;
-    top: 0;
-    left: 0;
     opacity: 0;
     transition: opacity 1s ease-in-out;
-    pointer-events: none;
-    z-index: 1;
 }
 
-/* Image visible */
-.background.active {
-    opacity: 1;
-    z-index: 2;
-}
-
-/* Image qui était visible juste avant */
+.background.active,
 .background.previous {
-    opacity: 1; /* reste visible tant que la nouvelle n’est pas prête */
-    z-index: 1;
-}
-
-
-/* Logo centré */
-.logo-centered {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 300px;
-    z-index: 3;
-}
-
-/* Sous-titre */
-.hero-subtitle {
-    position: absolute;
-    top: 78%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 2rem;
-    color: #0099ff;
-    text-align: center;
-    z-index: 4;
-    margin: 0;
-    font-weight: bold;
-    text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.15);
+    opacity: 1;
 }
 
 /* ===========================
@@ -95,16 +111,6 @@ html, body {
     width: 100%;
     top: 0;
     height: 60px;
-}
-
-body.admin-bar .main-header {
-    top: 32px;
-}
-
-@media screen and (max-width: 782px) {
-    body.admin-bar .main-header {
-        top: 46px;
-    }
 }
 
 .site-title {
@@ -127,48 +133,19 @@ body.admin-bar .main-header {
     align-items: center;
 }
 
-/* SCAR animation */
-.scar-container {
-    position: relative;
-    display: inline-block;
-}
-.canon-marker {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    right: 0;      /* extrémité droite du SCAR */
-    top: 30%;      /* ajuste finement la hauteur du canon */
-    pointer-events: none;
-}
-main, .site-content, .page-content {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.scar-img {
-    max-height: 55px;
-    margin-left: 1rem;
-}
-
-.bille {
-    position: absolute;
-    width: 3px;
-    height: 3px;
-    background: #66ff00;
-    border-radius: 50%;
-    z-index: 30;
-    pointer-events: none;
-}
-
-.scar-img.recoil {
-    animation: recoil 0.15s linear;
-}
+/* SCAR */
+.scar-container { position: relative; display: inline-block; }
+.canon-marker { position: absolute; width: 1px; height: 1px; right: 0; top: 30%; pointer-events: none; }
+.scar-img { max-height: 55px; margin-left: 1rem; }
+.bille { position: absolute; width: 3px; height: 3px; background: #66ff00; border-radius: 50%; z-index: 30; pointer-events: none; }
 
 @keyframes recoil {
     0% { transform: translateX(0); }
     30% { transform: translateX(10px); }
     100% { transform: translateX(0); }
 }
+
+.scar-img.recoil { animation: recoil 0.15s linear; }
 
 /* Burger */
 .burger-menu {
@@ -178,10 +155,8 @@ main, .site-content, .page-content {
     flex-direction: column;
     justify-content: space-between;
     height: 20px;
-    background-color: transparent !important;
+    background: none !important;
     border: none !important;
-    outline: none !important;
-    box-shadow: none !important;
 }
 
 .burger-menu span {
@@ -216,26 +191,10 @@ main, .site-content, .page-content {
     pointer-events: auto;
 }
 
-.fullscreen-menu ul {
-    list-style: none;
-    padding: 0;
-    text-align: center;
-}
-
-.fullscreen-menu li {
-    margin: 20px 0;
-}
-
-.fullscreen-menu a {
-    color: #007bff;
-    text-decoration: none;
-    font-size: 2rem;
-    transition: color 0.3s ease;
-}
-
-.fullscreen-menu a:hover {
-    color: #024287;
-}
+.fullscreen-menu ul { list-style: none; padding: 0; text-align: center; }
+.fullscreen-menu li { margin: 20px 0; }
+.fullscreen-menu a { color: #007bff; font-size: 2rem; text-decoration: none; }
+.fullscreen-menu a:hover { color: #024287; }
 
 #close-menu {
     position: absolute;
@@ -294,20 +253,21 @@ main, .site-content, .page-content {
    FOOTER
 =========================== */
 .site-footer {
-    background: #024287;
+    background: rgba(2, 66, 135, 0.40);
     height: 3rem;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 2rem;
     font-size: 1rem;
-    border-top: 1px solid #eee;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
     position: relative;
     z-index: 10;
 }
 
 .site-footer button,
-.site-footer a {
+.site-footer a,
+.site-footer .footer-rights {
     background: none;
     border: none;
     color: #ffffff;
@@ -315,27 +275,19 @@ main, .site-content, .page-content {
     font-size: 1rem;
     text-decoration: none;
     margin: 0 0.5rem;
-    transition: transform 0.2s cubic-bezier(.4, 2, .6, 1), color 0.2s;
+    transition: transform 0.2s cubic-bezier(.4, 2, .6, 1), opacity 0.2s;
 }
 
 .site-footer button:hover,
 .site-footer a:hover {
     transform: scale(1.15);
+    opacity: 0.85;
 }
 
 /* ===========================
-   RESPONSIVE
+   RESPONSIVE GLOBAL
 =========================== */
 @media (max-width: 768px) {
-    .logo-centered {
-        width: 200px;
-    }
-
-    .hero-subtitle {
-        font-size: 1.4rem;
-        top: 75%;
-    }
-
     .site-footer {
         flex-direction: column;
         height: auto;
@@ -344,24 +296,10 @@ main, .site-content, .page-content {
     }
 }
 
-@media (max-width: 600px) {
-    #register-form {
-        grid-template-columns: 1fr;
-    }
-
-    #register-form button[type="submit"] {
-        grid-column: 1;
-    }
-}
 /* ===========================
-   HEADER COMPACT POUR MOBILE
+   HEADER COMPACT
 =========================== */
 @media (max-width: 768px) {
-    .hero {
-        height: 35vh;
-        min-height: 220px;
-    }
-
     .main-header {
         height: 50px;
         padding: 0 10px;
@@ -372,11 +310,11 @@ main, .site-content, .page-content {
         padding: 0.2em 0.8em;
         -webkit-text-stroke: 0.7px #fff;
         text-stroke: 0.7px #fff;
-        white-space: nowrap; /* empêche la coupure en 3 lignes */
+        white-space: nowrap;
     }
 
     .scar-img {
-        max-height: 35px; /* réduit le SCAR */
+        max-height: 35px;
         margin-left: 0.5rem;
     }
 
@@ -389,11 +327,8 @@ main, .site-content, .page-content {
         height: 2px;
     }
 }
-/* ===========================
-   HEADER ULTRA COMPACT < 360px
-=========================== */
-@media (max-width: 360px) {
 
+@media (max-width: 360px) {
     .main-header {
         height: 45px;
         padding: 0 8px;

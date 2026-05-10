@@ -8,11 +8,19 @@
 </head>
 
 <body <?php body_class(); ?>>
-    <div class="hero">
-        <div class="background" id="background-rotator"></div>
-        <div class="background" id="background-rotator-next"></div>
-        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/pvc-patch-no-BG.png" alt="Logo WSE" class="logo-centered">
-    </div>
+    <!-- SLIDER GLOBAL (derrière tout le site) -->
+<div class="background-slider">
+    <div class="background" id="background-rotator"></div>
+    <div class="background" id="background-rotator-next"></div>
+</div>
+
+<!-- HERO (ne contient plus que le logo) -->
+<div class="hero">
+    <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/pvc-patch-no-BG.png"
+         alt="Logo WSE"
+         class="logo-centered">
+</div>
+
 
 
     <!-- Modale d'inscription -->
