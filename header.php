@@ -8,6 +8,12 @@
 </head>
 
 <body <?php body_class(); ?>>
+    <div class="hero">
+        <div class="background" id="background-rotator"></div>
+        <div class="background" id="background-rotator-next"></div>
+        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/pvc-patch-no-BG.png" alt="Logo WSE" class="logo-centered">
+    </div>
+
 
     <!-- Modale d'inscription -->
     <div class="modal" id="register-modal" aria-hidden="true">
