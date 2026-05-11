@@ -125,7 +125,6 @@ body:not(.home) .home-subtitle {
     border-radius: 2em;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
     -webkit-text-stroke: 1px #fff;
-    text-stroke: 1px #fff;
 }
 
 .header-left {
@@ -137,7 +136,7 @@ body:not(.home) .home-subtitle {
 .scar-container { position: relative; display: inline-block; }
 .canon-marker { position: absolute; width: 1px; height: 1px; right: 0; top: 30%; pointer-events: none; }
 .scar-img { max-height: 55px; margin-left: 1rem; }
-.bille { position: absolute; width: 3px; height: 3px; background: #66ff00; border-radius: 50%; z-index: 30; pointer-events: none; }
+.bille { position: absolute; width: 3px; height: 3px; background: #ffffff; border-radius: 50%; z-index: 30; pointer-events: none; }
 
 @keyframes recoil {
     0% { transform: translateX(0); }
@@ -356,3 +355,98 @@ body:not(.home) .home-subtitle {
         height: 2px;
     }
 }
+/* Correction taille du logo dans le hero */
+.logo-centered {
+    width: 260px;
+    max-width: 60vw;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+@media (max-width: 768px) {
+    .logo-centered {
+        width: 200px;
+        max-width: 55vw;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-centered {
+        width: 150px;
+        max-width: 50vw;
+    }
+}
+/* Correction header caché par la barre admin */
+body.admin-bar .main-header {
+    top: 32px;
+}
+
+@media screen and (max-width: 782px) {
+    body.admin-bar .main-header {
+        top: 46px;
+    }
+}
+
+/* Taille uniforme des images du slider Terrain */
+.terrain-slider .slide img {
+    width: 100%;
+    height: 260px; /* hauteur fixe */
+    object-fit: cover; /* recadre proprement */
+    border-radius: 12px;
+    cursor: pointer;
+}
+/* Modale d'image agrandie */
+.img-modal {
+    display: none;
+    position: fixed;
+    z-index: 500;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    justify-content: center;
+    align-items: center;
+}
+
+.img-modal-content {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 12px;
+    box-shadow: 0 0 20px #000;
+}
+
+.img-modal-close {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    font-size: 3rem;
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+}
+/* Scrollbar visible pour le slider Terrain */
+.terrain-slider {
+    scrollbar-width: thin;            /* Firefox */
+    scrollbar-color: #007bff #ffffff; /* pouce bleu / rail blanc */
+}
+
+/* Chrome, Edge, Safari */
+.terrain-slider::-webkit-scrollbar {
+    height: 10px; /* hauteur de la barre */
+}
+
+.terrain-slider::-webkit-scrollbar-track {
+    background: #ffffff; /* rail blanc */
+    border-radius: 10px;
+}
+
+.terrain-slider::-webkit-scrollbar-thumb {
+    background: #007bff; /* pouce bleu */
+    border-radius: 10px;
+}
+
+.terrain-slider::-webkit-scrollbar-thumb:hover {
+    background: #005fcc; /* bleu plus foncé au survol */
+}
+

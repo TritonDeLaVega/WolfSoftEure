@@ -9,9 +9,15 @@ get_header();
     <!-- SLIDER IMAGES -->
     <div class="terrain-slider">
         <div class="slide"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/terrainMaps.png" alt="Carte du terrain"></div>
-        <div class="slide"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/terrain1.jpg" alt="Terrain 1"></div>
-        <div class="slide"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/terrain2.jpg" alt="Terrain 2"></div>
-        <div class="slide"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/terrain3.jpg" alt="Terrain 3"></div>
+        <div class="slide"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/terrainMaps2.png" alt="Terrain 1"></div>
+        <div class="slide"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/terrain_11.jpg" alt="Terrain 2"></div>
+        <div class="slide"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/terrain_4.jpg" alt="Terrain 3"></div>
+        <div class="slide"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/terrain_5.jpg" alt="Terrain 4"></div>
+        <div class="slide"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/terrain_6.jpg" alt="Terrain 5"></div>
+        <div class="slide"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/terrain_7.jpg" alt="Terrain 6"></div>
+        <div class="slide"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/terrain_8.jpg" alt="Terrain 7"></div>
+        <div class="slide"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/terrain_9.jpg" alt="Terrain 8"></div>
+        <div class="slide"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/terrain_10.jpg" alt="Terrain 9"></div>
     </div>
 
     <!-- CONTENU TEXTE + CARTE -->
@@ -41,5 +47,10 @@ get_header();
 
     </div>
 </section>
+<!-- MODALE D'AGRANDISSEMENT D'IMAGE -->
+<div id="img-modal" class="img-modal">
+    <span class="img-modal-close">&times;</span>
+    <img class="img-modal-content" id="img-modal-display">
+</div>
 
 <?php get_footer(); ?>

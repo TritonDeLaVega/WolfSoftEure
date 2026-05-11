@@ -208,4 +208,30 @@ document.addEventListener("DOMContentLoaded", () => {
             if (e.target === contactModal) contactModal.classList.remove('active');
         };
     }
+    // === AGRANDISSEMENT DES IMAGES DU SLIDER TERRAIN ===
+    const terrainImages = document.querySelectorAll('.terrain-slider .slide img');
+    const imgModal = document.getElementById('img-modal');
+    const imgModalDisplay = document.getElementById('img-modal-display');
+    const imgModalClose = document.querySelector('.img-modal-close');
+
+    if (terrainImages.length > 0 && imgModal && imgModalDisplay && imgModalClose) {
+
+        terrainImages.forEach(img => {
+            img.addEventListener('click', () => {
+                imgModal.style.display = 'flex';
+                imgModalDisplay.src = img.src;
+            });
+        });
+
+        imgModalClose.addEventListener('click', () => {
+            imgModal.style.display = 'none';
+        });
+
+        imgModal.addEventListener('click', (e) => {
+            if (e.target === imgModal) {
+                imgModal.style.display = 'none';
+            }
+        });
+    }
+
 });
