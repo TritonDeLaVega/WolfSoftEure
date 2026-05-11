@@ -412,12 +412,27 @@ body.admin-bar .main-header {
 
 /* Logo dans le hero */
 .logo-centered {
-    width: 260px;
-    max-width: 60vw;
+    width: 340px; /* plus grand */
+    max-width: 65vw;
     height: auto;
     display: block;
     margin: 0 auto;
 }
+
+@media (max-width: 768px) {
+    .logo-centered {
+        width: 240px;
+        max-width: 60vw;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-centered {
+        width: 180px;
+        max-width: 55vw;
+    }
+}
+
 
 /* Phrase sous le logo (home uniquement via is_front_page) */
 .hero-subtitle {
@@ -425,12 +440,6 @@ body.admin-bar .main-header {
     color: #fff;
     font-size: 2rem;
     font-weight: 600;
-    text-shadow:
-        0 0 10px #00aaff,
-        0 0 20px #00aaff,
-        0 0 30px #00aaff,
-        0 0 40px #0099ff,
-        0 0 50px #0099ff;
     text-align: center;
 }
 
@@ -461,5 +470,36 @@ body.admin-bar .main-header {
     .hero-subtitle {
         font-size: 1.2rem;
         width: 90%;
+    }
+}
+/* Glow animé intensifié */
+.hero-subtitle {
+    animation: glowPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+    0% {
+        text-shadow:
+            0 0 12px #00c8ff,
+            0 0 28px #00c8ff,
+            0 0 45px #00c8ff,
+            0 0 60px #0099ff,
+            0 0 80px #0099ff;
+    }
+    50% {
+        text-shadow:
+            0 0 18px #33ddff,
+            0 0 40px #33ddff,
+            0 0 70px #33ddff,
+            0 0 90px #00b7ff,
+            0 0 120px #00b7ff;
+    }
+    100% {
+        text-shadow:
+            0 0 12px #00c8ff,
+            0 0 28px #00c8ff,
+            0 0 45px #00c8ff,
+            0 0 60px #0099ff,
+            0 0 80px #0099ff;
     }
 }

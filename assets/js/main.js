@@ -1,72 +1,76 @@
 document.addEventListener("DOMContentLoaded", () => {
+    let audioUnlocked = false;
+
+    document.addEventListener("click", () => {
+        if (!audioUnlocked) {
+            const a = new Audio(wolfsoftMain.themeUrl + '/assets/sounds/single-shot-sig-552-airsoft.wav');
+            a.play().catch(() => { });
+            audioUnlocked = true;
+        }
+    }, { once: true });
+
+
+    /* ===========================
+       VARIABLES GLOBALES
+    ============================ */
     const themeUrl = wolfsoftMain.themeUrl + '/assets/images/';
     const soundUrl = wolfsoftMain.themeUrl + '/assets/sounds/';
 
-    // === SCAR ANIMATION (toujours actif) ===
+
+    /* ===========================
+       SCAR ANIMATION
+    ============================ */
     const scarContainer = document.querySelector('.scar-container');
     const scarImg = document.querySelector('.scar-img');
     const burger = document.getElementById("burger-button");
 
-    // Un seul objet Audio réutilisé pour éviter les ratés
-    const scarAudio = new Audio(wolfsoftMain.themeUrl + '/assets/sounds/single-shot-sig-552-airsoft.wav');
-
     if (scarContainer && scarImg && burger) {
+
+        const scarAudio = new Audio(wolfsoftMain.themeUrl + '/assets/sounds/single-shot-sig-552-airsoft.wav');
 
         function tirerBilleRafale() {
             let tirs = 0;
 
             function tirer() {
+                const canon = scarContainer.querySelector('.canon-marker');
+                if (!canon) return;
+
                 const bille = document.createElement('div');
                 bille.className = 'bille';
 
-                // === POSITION EXACTE DU CANON ===
-                const canon = scarContainer.querySelector('.canon-marker');
                 const canonRect = canon.getBoundingClientRect();
                 const containerRect = scarContainer.getBoundingClientRect();
 
-                const canonX = canonRect.left - containerRect.left;
-                const canonY = canonRect.top - containerRect.top;
-
-                bille.style.left = `${canonX}px`;
-                bille.style.top = `${canonY}px`;
+                bille.style.left = `${canonRect.left - containerRect.left}px`;
+                bille.style.top = `${canonRect.top - containerRect.top}px`;
 
                 scarContainer.appendChild(bille);
 
-                // === POSITION DU BURGER ===
                 const burgerRect = burger.getBoundingClientRect();
                 const scarRect = scarImg.getBoundingClientRect();
 
-                // Tir strictement horizontal
                 const distanceX = burgerRect.left - scarRect.right;
-                const distanceY = 0;
 
-                // === ANIMATION DE LA BILLE ===
                 bille.animate(
                     [
                         { transform: 'translate(0, 0)' },
-                        { transform: `translate(${distanceX}px, ${distanceY}px)` }
+                        { transform: `translate(${distanceX}px, 0)` }
                     ],
                     { duration: 700, easing: 'linear' }
                 );
 
-                bille.style.transform = `translate(${distanceX}px, ${distanceY}px)`;
-
-                // === DISPARITION ===
                 setTimeout(() => bille.remove(), 700);
 
-                // === RECUL DU SCAR ===
                 scarImg.classList.remove('recoil');
                 void scarImg.offsetWidth;
                 scarImg.classList.add('recoil');
                 setTimeout(() => scarImg.classList.remove('recoil'), 150);
 
-                // === SON ===
-                try {
+                if (audioUnlocked) {
                     scarAudio.currentTime = 0;
-                    scarAudio.play();
-                } catch (e) { }
+                    scarAudio.play().catch(() => { });
+                }
 
-                // === RAFALE ===
                 tirs++;
                 if (tirs < 3) setTimeout(tirer, 100);
             }
@@ -74,13 +78,13 @@ document.addEventListener("DOMContentLoaded", () => {
             tirer();
         }
 
-        // Tir toutes les 8 secondes
         setInterval(tirerBilleRafale, 8000);
     }
 
 
-
-    // === BURGER MENU ===
+    /* ===========================
+       BURGER MENU
+    ============================ */
     const menu = document.getElementById("fullscreen-menu");
     const closeBtn = document.getElementById("close-menu");
 
@@ -103,24 +107,29 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // === MODALE INSCRIPTION ===
+
+    /* ===========================
+       MODALE INSCRIPTION
+    ============================ */
     const newAccountBtn = document.getElementById('new-account-btn');
     const registerModal = document.getElementById('register-modal');
     const closeRegisterModal = document.getElementById('close-register-modal');
     const registerForm = document.getElementById('register-form');
 
     if (newAccountBtn && registerModal && closeRegisterModal && registerForm) {
-        newAccountBtn.onclick = (e) => {
+
+        newAccountBtn.addEventListener("click", (e) => {
             e.preventDefault();
             registerModal.classList.add('active');
-        };
+        });
 
-        closeRegisterModal.onclick = () => {
+        closeRegisterModal.addEventListener("click", () => {
             registerModal.classList.remove('active');
-        };
+        });
 
-        registerForm.onsubmit = (e) => {
+        registerForm.addEventListener("submit", (e) => {
             e.preventDefault();
+
             const formData = new FormData(registerForm);
             formData.append('action', 'wse_register');
 
@@ -136,37 +145,44 @@ document.addEventListener("DOMContentLoaded", () => {
                         registerForm.reset();
                     }
                 });
-        };
+        });
 
-        registerModal.onclick = (e) => {
+        registerModal.addEventListener("click", (e) => {
             if (e.target === registerModal) {
                 registerModal.classList.remove('active');
             }
-        };
+        });
     }
 
-    // === MODALE CONNEXION ===
+
+    /* ===========================
+       MODALE CONNEXION
+    ============================ */
     const loginBtn = document.getElementById('login-btn');
     const loginModal = document.getElementById('login-modal');
     const closeLoginModal = document.getElementById('close-login-modal');
     const loginForm = document.getElementById('login-form');
 
     if (loginBtn && loginModal && closeLoginModal) {
-        loginBtn.onclick = (e) => {
+
+        loginBtn.addEventListener("click", (e) => {
             e.preventDefault();
             loginModal.classList.add('active');
-        };
-        closeLoginModal.onclick = () => {
+        });
+
+        closeLoginModal.addEventListener("click", () => {
             loginModal.classList.remove('active');
-        };
-        loginModal.onclick = (e) => {
+        });
+
+        loginModal.addEventListener("click", (e) => {
             if (e.target === loginModal) loginModal.classList.remove('active');
-        };
+        });
     }
 
-    if (loginForm) {
-        loginForm.onsubmit = function (e) {
+    if (loginForm && loginModal) {
+        loginForm.addEventListener("submit", (e) => {
             e.preventDefault();
+
             const formData = new FormData(loginForm);
             formData.append('action', 'wse_login');
 
@@ -182,33 +198,44 @@ document.addEventListener("DOMContentLoaded", () => {
                         window.location.reload();
                     }
                 });
-        };
+        });
     }
 
-    // === MODALE CONTACT ===
+
+    /* ===========================
+       MODALE CONTACT
+    ============================ */
     const contactBtn = document.getElementById('contact-btn');
     const contactModal = document.getElementById('contact-modal');
     const closeContactModal = document.getElementById('close-modal');
     const contactForm = document.getElementById('contact-form');
 
     if (contactBtn && contactModal && closeContactModal && contactForm) {
-        contactBtn.onclick = () => {
+
+        contactBtn.addEventListener("click", () => {
             contactModal.classList.add('active');
-        };
-        closeContactModal.onclick = () => {
+        });
+
+        closeContactModal.addEventListener("click", () => {
             contactModal.classList.remove('active');
-        };
-        contactForm.onsubmit = (e) => {
+        });
+
+        contactForm.addEventListener("submit", (e) => {
             e.preventDefault();
             alert('Message envoyé (simulation en local).');
             contactModal.classList.remove('active');
             contactForm.reset();
-        };
-        contactModal.onclick = (e) => {
+        });
+
+        contactModal.addEventListener("click", (e) => {
             if (e.target === contactModal) contactModal.classList.remove('active');
-        };
+        });
     }
-    // === AGRANDISSEMENT DES IMAGES DU SLIDER TERRAIN ===
+
+
+    /* ===========================
+       MODALE IMAGE TERRAIN
+    ============================ */
     const terrainImages = document.querySelectorAll('.terrain-slider .slide img');
     const imgModal = document.getElementById('img-modal');
     const imgModalDisplay = document.getElementById('img-modal-display');
@@ -228,9 +255,36 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         imgModal.addEventListener('click', (e) => {
-            if (e.target === imgModal) {
-                imgModal.style.display = 'none';
-            }
+            if (e.target === imgModal) imgModal.style.display = 'none';
+        });
+    }
+
+
+    /* ===========================
+       SWIPE MOBILE SLIDER TERRAIN
+    ============================ */
+    const terrainSlider = document.querySelector('.terrain-slider');
+
+    if (terrainSlider) {
+        let isDown = false;
+        let startX = 0;
+        let scrollLeft = 0;
+
+        terrainSlider.addEventListener('touchstart', (e) => {
+            isDown = true;
+            startX = e.touches[0].pageX - terrainSlider.offsetLeft;
+            scrollLeft = terrainSlider.scrollLeft;
+        });
+
+        terrainSlider.addEventListener('touchmove', (e) => {
+            if (!isDown) return;
+            const x = e.touches[0].pageX - terrainSlider.offsetLeft;
+            const walk = (x - startX) * 1.5;
+            terrainSlider.scrollLeft = scrollLeft - walk;
+        });
+
+        terrainSlider.addEventListener('touchend', () => {
+            isDown = false;
         });
     }
 
