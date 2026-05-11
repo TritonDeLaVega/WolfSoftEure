@@ -9,17 +9,21 @@
 
 <body <?php body_class(); ?>>
     <!-- SLIDER GLOBAL (derrière tout le site) -->
-<div class="background-slider">
-    <div class="background" id="background-rotator"></div>
-    <div class="background" id="background-rotator-next"></div>
-</div>
+    <div class="background-slider">
+        <div class="background" id="background-rotator"></div>
+        <div class="background" id="background-rotator-next"></div>
+    </div>
 
-<!-- HERO (ne contient plus que le logo) -->
-<div class="hero">
-    <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/pvc-patch-no-BG.png"
-         alt="Logo WSE"
-         class="logo-centered">
-</div>
+    <!-- HERO (ne contient plus que le logo) -->
+    <div class="hero">
+        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/pvc-patch-no-BG.png"
+            alt="Logo WSE"
+            class="logo-centered">
+        <?php if (is_front_page()) : ?>
+            <p class="hero-subtitle">Bienvenue sur le site&nbsp;!</p>
+        <?php endif; ?>
+    </div>
+
 
 
 

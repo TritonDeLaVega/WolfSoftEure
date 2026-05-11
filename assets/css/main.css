@@ -16,60 +16,6 @@ main, .site-content, .page-content {
 }
 
 /* ===========================
-   HERO HOME (centrage parfait)
-=========================== */
-body.home .site-main {
-    position: relative;
-    height: calc(100vh - 60px); /* 100vh - hauteur du header */
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* centre verticalement */
-    align-items: center;
-    text-align: center;
-}
-
-/* Phrase sous le logo */
-body.home .home-subtitle {
-    margin-top: 20px;
-    color: #fff;
-    font-size: 2rem;
-    font-weight: 600;
-    text-shadow:
-        0 0 10px #00aaff,
-        0 0 20px #00aaff,
-        0 0 30px #00aaff,
-        0 0 40px #0099ff,
-        0 0 50px #0099ff;
-    white-space: nowrap;
-}
-
-/* Masquer ailleurs */
-body:not(.home) .home-subtitle {
-    display: none;
-}
-
-/* Responsive HERO */
-@media (max-width: 768px) {
-    body.home .site-main {
-        height: calc(100vh - 50px); /* header mobile */
-    }
-    body.home .home-subtitle {
-        font-size: 1.4rem;
-    }
-}
-
-@media (max-width: 480px) {
-    body.home .site-main {
-        height: calc(100vh - 45px);
-    }
-    body.home .home-subtitle {
-        font-size: 1.2rem;
-        white-space: normal;
-        width: 90%;
-    }
-}
-
-/* ===========================
    SLIDER GLOBAL
 =========================== */
 .background-slider {
@@ -450,3 +396,70 @@ body.admin-bar .main-header {
     background: #005fcc; /* bleu plus foncé au survol */
 }
 
+/* ===========================
+   HERO GLOBAL (logo + phrase)
+=========================== */
+.hero {
+    position: relative;
+    width: 100%;
+    height: 85vh; /* hero plus grand et bien visible */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px; /* pour ne pas être sous le header fixe */
+}
+
+/* Logo dans le hero */
+.logo-centered {
+    width: 260px;
+    max-width: 60vw;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Phrase sous le logo (home uniquement via is_front_page) */
+.hero-subtitle {
+    margin-top: 20px;
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 600;
+    text-shadow:
+        0 0 10px #00aaff,
+        0 0 20px #00aaff,
+        0 0 30px #00aaff,
+        0 0 40px #0099ff,
+        0 0 50px #0099ff;
+    text-align: center;
+}
+
+/* Responsive hero */
+@media (max-width: 768px) {
+    .hero {
+        height: 75vh;
+        margin-top: 50px;
+    }
+    .logo-centered {
+        width: 200px;
+        max-width: 55vw;
+    }
+    .hero-subtitle {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        height: 70vh;
+        margin-top: 45px;
+    }
+    .logo-centered {
+        width: 150px;
+        max-width: 50vw;
+    }
+    .hero-subtitle {
+        font-size: 1.2rem;
+        width: 90%;
+    }
+}
