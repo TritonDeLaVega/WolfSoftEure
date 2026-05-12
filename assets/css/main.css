@@ -402,17 +402,21 @@ body.admin-bar .main-header {
 .hero {
     position: relative;
     width: 100%;
-    height: 85vh; /* hero plus grand et bien visible */
+    height: auto;              /* plus de hauteur fixe */
+    min-height: 55vh;          /* hauteur visuelle raisonnable */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 60px; /* pour ne pas être sous le header fixe */
+
+    padding-top: 120px;        /* empêche le logo de passer sous le header */
+    padding-bottom: 60px;      /* espace sous le logo */
+    box-sizing: border-box;
 }
 
 /* Logo dans le hero */
 .logo-centered {
-    width: 340px; /* plus grand */
+    width: 340px;
     max-width: 65vw;
     height: auto;
     display: block;
@@ -420,6 +424,12 @@ body.admin-bar .main-header {
 }
 
 @media (max-width: 768px) {
+    .hero {
+        min-height: 45vh;      /* hero plus compact sur mobile */
+        padding-top: 100px;    /* évite le header */
+        padding-bottom: 40px;
+    }
+
     .logo-centered {
         width: 240px;
         max-width: 60vw;
@@ -427,12 +437,17 @@ body.admin-bar .main-header {
 }
 
 @media (max-width: 480px) {
+    .hero {
+        min-height: 40vh;      /* encore plus compact */
+        padding-top: 90px;     /* évite le header */
+        padding-bottom: 30px;
+    }
+
     .logo-centered {
         width: 180px;
         max-width: 55vw;
     }
 }
-
 
 /* Phrase sous le logo (home uniquement via is_front_page) */
 .hero-subtitle {
@@ -443,35 +458,12 @@ body.admin-bar .main-header {
     text-align: center;
 }
 
-/* Responsive hero */
 @media (max-width: 768px) {
-    .hero {
-        height: 75vh;
-        margin-top: 50px;
-    }
-    .logo-centered {
-        width: 200px;
-        max-width: 55vw;
-    }
     .hero-subtitle {
         font-size: 1.4rem;
     }
 }
 
-@media (max-width: 480px) {
-    .hero {
-        height: 70vh;
-        margin-top: 45px;
-    }
-    .logo-centered {
-        width: 150px;
-        max-width: 50vw;
-    }
-    .hero-subtitle {
-        font-size: 1.2rem;
-        width: 90%;
-    }
-}
 /* ===========================
    HERO SUBTITLE — GLOW + FLOTTEMENT PREMIUM
 =========================== */
@@ -683,5 +675,77 @@ body.page-id-3 .entry-content {
 
     body.page-id-3 .entry-content {
         padding: 30px 15px;
+    }
+}
+/* Empêche le footer de remonter sur la page d'accueil */
+body.home .site-main {
+    min-height: calc(100vh - 200px); /* ajuste si besoin */
+}
+/* ===========================
+   Bloc d'introduction sous le hero (home uniquement)
+=========================== */
+body.home .home-intro {
+    max-width: 900px;
+    margin: 40px auto 60px auto;
+    padding: 30px 25px;
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(6px);
+    border-radius: 12px;
+    color: #fff;
+    line-height: 1.7;
+    font-size: 1.2rem;
+    text-align: left;
+    box-sizing: border-box;
+}
+
+/* Titre d'introduction */
+body.home .home-intro-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #00bfff;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Chaque ligne */
+body.home .home-line {
+    margin: 6px 0;
+    padding-left: 10px;
+}
+
+/* Note entre parenthèses */
+body.home .home-note {
+    font-style: italic;
+    opacity: 0.9;
+}
+
+/* Ligne finale (Longue vie à la WSE !) */
+body.home .home-final {
+    margin-top: 25px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* Mise en valeur du mot WSE */
+.wse-highlight {
+    color: #00bfff;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: 0 0 8px rgba(0, 191, 255, 0.6);
+    font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    body.home .home-intro {
+        padding: 25px 15px;
+        margin: 30px auto 50px auto;
+        font-size: 1.05rem;
+    }
+
+    body.home .home-intro-title,
+    body.home .home-final {
+        font-size: 1.2rem;
     }
 }
