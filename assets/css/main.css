@@ -545,3 +545,143 @@ body.admin-bar .main-header {
         width: 90%;
     }
 }
+
+/* ================================
+   PAGE POLITIQUE DE CONFIDENTIALITÉ (ID = 3)
+   ================================ */
+
+/* 1. Conteneur global : marges latérales réelles */
+body.page-id-3 .site-main {
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
+}
+
+/* 2. Titre : centrage + marges visuelles */
+body.page-id-3 h1.entry-title {
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    margin: 160px auto 20px auto;
+    padding: 12px 25px;
+    background: #ffffff;
+    color: #00bfff;
+    border-radius: 8px;
+    font-size: 42px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* 3. Bloc de texte flou : marges latérales réelles */
+body.page-id-3 .entry-content {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 40px 25px;
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(6px);
+    border-radius: 12px;
+    color: #fff;
+    line-height: 1.7;
+    box-sizing: border-box;
+}
+
+/* 4. Titres internes */
+body.page-id-3 .entry-content h1,
+body.page-id-3 .entry-content h2,
+body.page-id-3 .entry-content h3 {
+    color: #00bfff;
+    margin-top: 30px;
+}
+
+/* 5. Paragraphes */
+body.page-id-3 p {
+    margin-bottom: 18px;
+}
+
+/* 6. Masquer le lien "Modifier" */
+.post-edit-link {
+    display: none !important;
+}
+
+/* ================================
+   RESPONSIVE
+   ================================ */
+@media (max-width: 600px) {
+
+    /* marges latérales plus petites sur mobile */
+    body.page-id-3 .site-main {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    /* titre plus petit et margé */
+    body.page-id-3 h1.entry-title {
+        font-size: 26px;
+        padding: 10px 15px;
+        margin-top: 120px;
+        letter-spacing: 1px;
+    }
+
+    /* bloc flou avec marges visibles */
+    body.page-id-3 .entry-content {
+        padding: 30px 15px;
+        margin: 30px auto;
+    }
+}
+/* WRAPPER GLOBAL POUR FORCER LES MARGES LATÉRALES */
+body.page-id-3 article {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+/* TITRE AVEC FOND BLANC */
+body.page-id-3 h1.entry-title {
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    margin: 160px auto 20px auto;
+    padding: 12px 25px;
+    background: #ffffff;
+    color: #00bfff;
+    border-radius: 8px;
+    font-size: 42px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* BLOC DE TEXTE FLOU */
+body.page-id-3 .entry-content {
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(6px);
+    border-radius: 12px;
+    padding: 40px 25px;
+    margin-top: 40px;
+    color: #fff;
+    line-height: 1.7;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+
+    body.page-id-3 article {
+        padding: 0 12px;
+    }
+
+    body.page-id-3 h1.entry-title {
+        font-size: 26px;
+        padding: 10px 15px;
+        margin-top: 120px;
+    }
+
+    body.page-id-3 .entry-content {
+        padding: 30px 15px;
+    }
+}
