@@ -98,12 +98,17 @@
 
     <nav class="fullscreen-menu" id="fullscreen-menu">
         <button id="close-menu" aria-label="Fermer le menu">×</button>
-        <ul>
-            <li><a href="#">Parties</a></li>
-            <li><a href="#">Photos</a></li>
-            <li><a href="<?php echo esc_url(get_permalink(get_page_by_path('terrain'))); ?>">Terrain</a></li>
-            <li><a href="#">Boutique</a></li>
+        <?php
+        wp_nav_menu([
+            'theme_location' => 'main-menu',
+            'container'      => false,
+            'menu_class'     => '',
+            'items_wrap'     => '<ul>%3$s</ul>',
+        ]);
+        ?>
+        <ul class="account-links">
             <li><a href="#" id="new-account-btn">Nouveau compte</a></li>
             <li><a href="#" id="login-btn">Se connecter</a></li>
         </ul>
+
     </nav>

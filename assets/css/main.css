@@ -472,11 +472,25 @@ body.admin-bar .main-header {
         width: 90%;
     }
 }
-/* Glow animé intensifié */
+/* ===========================
+   HERO SUBTITLE — GLOW + FLOTTEMENT PREMIUM
+=========================== */
+
 .hero-subtitle {
-    animation: glowPulse 2.2s ease-in-out infinite;
+    margin-top: 20px;
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+
+    /* Effets combinés */
+    animation:
+        glowPulse 2.2s ease-in-out infinite,
+        floatUpDown 3.5s ease-in-out infinite,
+        breathe 6s ease-in-out infinite;
 }
 
+/* Glow intensifié */
 @keyframes glowPulse {
     0% {
         text-shadow:
@@ -501,5 +515,33 @@ body.admin-bar .main-header {
             0 0 45px #00c8ff,
             0 0 60px #0099ff,
             0 0 80px #0099ff;
+    }
+}
+
+/* Flottement vertical (lévitation) */
+@keyframes floatUpDown {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0); }
+}
+
+/* Respiration (léger zoom) */
+@keyframes breathe {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-subtitle {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-subtitle {
+        font-size: 1.2rem;
+        width: 90%;
     }
 }
