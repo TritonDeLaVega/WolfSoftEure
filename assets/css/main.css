@@ -749,3 +749,10 @@ body.home .home-final {
         font-size: 1.2rem;
     }
 }
+.menu-forum {
+    display: none;
+}
+
+body.logged-in .menu-forum {
+    display: block;
+}

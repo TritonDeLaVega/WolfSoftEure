@@ -70,4 +70,13 @@ add_action('wp_enqueue_scripts', function () {
         'themeUrl' => get_stylesheet_directory_uri(),
         'ajaxUrl'  => admin_url('admin-ajax.php'),
     ]);
+
+    function wse_restrict_forum_access()
+    {
+        if (is_bbpress() && !is_user_logged_in()) {
+            wp_redirect(wp_login_url(get_permalink()));
+            exit;
+        }
+    }
+    add_action('template_redirect', 'wse_restrict_forum_access');
 });

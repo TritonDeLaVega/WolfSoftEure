@@ -1,17 +1,23 @@
 <?php
 /* Template Name: Espace Membre */
 get_header();
+?>
 
-echo '<main class="site-main espace-membre">';
+<main class="site-main espace-membre">
 
-if (is_user_logged_in()) {
-    $user = wp_get_current_user();
-    echo '<p>Bienvenue, ' . esc_html($user->display_name) . ' !</p>';
-    // Ici tu peux afficher les infos usermeta wse_*
-} else {
-    echo '<p>Veuillez vous connecter pour accéder à l\'espace membre.</p>';
-}
+<?php if ( is_user_logged_in() ) : ?>
 
-echo '</main>';
+    <?php $user = wp_get_current_user(); ?>
+    <p>Bienvenue, <?php echo esc_html( $user->display_name ); ?> !</p>
 
-get_footer();
+    <!-- Ici tu pourras afficher les infos wse_* plus tard -->
+
+<?php else : ?>
+
+    <p>Veuillez vous connecter pour accéder à l'espace membre.</p>
+
+<?php endif; ?>
+
+</main>
+
+<?php get_footer(); ?>
