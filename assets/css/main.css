@@ -756,3 +756,93 @@ body.home .home-final {
 body.logged-in .menu-forum {
     display: block;
 }
+/* ===========================
+   FORMULAIRES MODALES — STYLE PREMIUM WSE
+=========================== */
+
+.modal-content h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #024287;
+    text-align: center;
+}
+
+/* Structure du formulaire */
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Labels */
+.modal-content label {
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
+    color: #024287;
+    font-size: 1rem;
+}
+
+/* Inputs, selects, textarea */
+.modal-content input,
+.modal-content select,
+.modal-content textarea {
+    margin-top: 6px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    background: #f8f8f8;
+    transition: all 0.2s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.modal-content input:focus,
+.modal-content select:focus,
+.modal-content textarea:focus {
+    border-color: #00bfff;
+    box-shadow: 0 0 8px rgba(0,191,255,0.4);
+    outline: none;
+}
+
+/* Boutons */
+.modal-content button {
+    background: #024287;
+    color: #fff;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.modal-content button:hover {
+    background: #0066cc;
+    transform: scale(1.03);
+}
+
+/* Textarea */
+.modal-content textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .modal-content {
+        padding: 1.5rem;
+    }
+
+    .modal-content h2 {
+        font-size: 1.4rem;
+    }
+
+    .modal-content button {
+        font-size: 1rem;
+    }
+}
