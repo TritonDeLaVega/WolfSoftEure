@@ -57,6 +57,7 @@
                         <option>Dieu</option>
                     </select>
                 </label>
+                <?php wp_nonce_field('wse_register_action', 'wse_register_nonce'); ?>
                 <button type="submit">S'inscrire</button>
             </form>
         </div>
@@ -70,6 +71,7 @@
             <form id="login-form">
                 <label>E-mail ou pseudo*<input type="text" name="login" required></label>
                 <label>Mot de passe*<input type="password" name="password" required></label>
+                <?php wp_nonce_field('wse_login_action', 'wse_login_nonce'); ?>
                 <button type="submit">Se connecter</button>
             </form>
         </div>

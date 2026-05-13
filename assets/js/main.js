@@ -141,9 +141,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 .then(data => {
                     alert(data.message);
                     if (data.success) {
-                        registerModal.classList.remove('active');
-                        registerForm.reset();
+                        if (data.redirect) {
+                            window.location.href = data.redirect;
+                        } else {
+                            window.location.reload();
+                        }
                     }
+
                 });
         });
 
@@ -194,9 +198,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 .then(data => {
                     alert(data.message);
                     if (data.success) {
-                        loginModal.classList.remove('active');
-                        window.location.reload();
+                        if (data.redirect) {
+                            window.location.href = data.redirect;
+                        } else {
+                            window.location.reload();
+                        }
                     }
+
                 });
         });
     }
