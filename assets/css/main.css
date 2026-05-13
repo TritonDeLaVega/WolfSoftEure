@@ -1,7 +1,8 @@
 /* ===========================
    RESET & GLOBAL
 =========================== */
-html, body {
+html,
+body {
     margin: 0;
     padding: 0;
     min-height: 100%;
@@ -10,7 +11,9 @@ html, body {
     background: transparent !important;
 }
 
-main, .site-content, .page-content {
+main,
+.site-content,
+.page-content {
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -79,18 +82,52 @@ main, .site-content, .page-content {
 }
 
 /* SCAR */
-.scar-container { position: relative; display: inline-block; }
-.canon-marker { position: absolute; width: 1px; height: 1px; right: 0; top: 30%; pointer-events: none; }
-.scar-img { max-height: 55px; margin-left: 1rem; }
-.bille { position: absolute; width: 3px; height: 3px; background: #ffffff; border-radius: 50%; z-index: 30; pointer-events: none; }
-
-@keyframes recoil {
-    0% { transform: translateX(0); }
-    30% { transform: translateX(10px); }
-    100% { transform: translateX(0); }
+.scar-container {
+    position: relative;
+    display: inline-block;
 }
 
-.scar-img.recoil { animation: recoil 0.15s linear; }
+.canon-marker {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    right: 0;
+    top: 30%;
+    pointer-events: none;
+}
+
+.scar-img {
+    max-height: 55px;
+    margin-left: 1rem;
+}
+
+.bille {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: #ffffff;
+    border-radius: 50%;
+    z-index: 30;
+    pointer-events: none;
+}
+
+@keyframes recoil {
+    0% {
+        transform: translateX(0);
+    }
+
+    30% {
+        transform: translateX(10px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.scar-img.recoil {
+    animation: recoil 0.15s linear;
+}
 
 /* Burger */
 .burger-menu {
@@ -136,10 +173,25 @@ main, .site-content, .page-content {
     pointer-events: auto;
 }
 
-.fullscreen-menu ul { list-style: none; padding: 0; text-align: center; }
-.fullscreen-menu li { margin: 20px 0; }
-.fullscreen-menu a { color: #007bff; font-size: 2rem; text-decoration: none; }
-.fullscreen-menu a:hover { color: #024287; }
+.fullscreen-menu ul {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+.fullscreen-menu li {
+    margin: 20px 0;
+}
+
+.fullscreen-menu a {
+    color: #007bff;
+    font-size: 2rem;
+    text-decoration: none;
+}
+
+.fullscreen-menu a:hover {
+    color: #024287;
+}
 
 #close-menu {
     position: absolute;
@@ -301,6 +353,7 @@ main, .site-content, .page-content {
         height: 2px;
     }
 }
+
 /* Correction taille du logo dans le hero */
 .logo-centered {
     width: 260px;
@@ -309,6 +362,7 @@ main, .site-content, .page-content {
     display: block;
     margin: 0 auto;
 }
+
 @media (max-width: 768px) {
     .logo-centered {
         width: 200px;
@@ -322,6 +376,7 @@ main, .site-content, .page-content {
         max-width: 50vw;
     }
 }
+
 /* Correction header caché par la barre admin */
 body.admin-bar .main-header {
     top: 32px;
@@ -336,11 +391,14 @@ body.admin-bar .main-header {
 /* Taille uniforme des images du slider Terrain */
 .terrain-slider .slide img {
     width: 100%;
-    height: 260px; /* hauteur fixe */
-    object-fit: cover; /* recadre proprement */
+    height: 260px;
+    /* hauteur fixe */
+    object-fit: cover;
+    /* recadre proprement */
     border-radius: 12px;
     cursor: pointer;
 }
+
 /* Modale d'image agrandie */
 .img-modal {
     display: none;
@@ -350,7 +408,7 @@ body.admin-bar .main-header {
     top: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.85);
+    background: rgba(0, 0, 0, 0.85);
     justify-content: center;
     align-items: center;
 }
@@ -371,29 +429,36 @@ body.admin-bar .main-header {
     cursor: pointer;
     font-weight: bold;
 }
+
 /* Scrollbar visible pour le slider Terrain */
 .terrain-slider {
-    scrollbar-width: thin;            /* Firefox */
-    scrollbar-color: #007bff #ffffff; /* pouce bleu / rail blanc */
+    scrollbar-width: thin;
+    /* Firefox */
+    scrollbar-color: #007bff #ffffff;
+    /* pouce bleu / rail blanc */
 }
 
 /* Chrome, Edge, Safari */
 .terrain-slider::-webkit-scrollbar {
-    height: 10px; /* hauteur de la barre */
+    height: 10px;
+    /* hauteur de la barre */
 }
 
 .terrain-slider::-webkit-scrollbar-track {
-    background: #ffffff; /* rail blanc */
+    background: #ffffff;
+    /* rail blanc */
     border-radius: 10px;
 }
 
 .terrain-slider::-webkit-scrollbar-thumb {
-    background: #007bff; /* pouce bleu */
+    background: #007bff;
+    /* pouce bleu */
     border-radius: 10px;
 }
 
 .terrain-slider::-webkit-scrollbar-thumb:hover {
-    background: #005fcc; /* bleu plus foncé au survol */
+    background: #005fcc;
+    /* bleu plus foncé au survol */
 }
 
 /* ===========================
@@ -402,15 +467,19 @@ body.admin-bar .main-header {
 .hero {
     position: relative;
     width: 100%;
-    height: auto;              /* plus de hauteur fixe */
-    min-height: 55vh;          /* hauteur visuelle raisonnable */
+    height: auto;
+    /* plus de hauteur fixe */
+    min-height: 55vh;
+    /* hauteur visuelle raisonnable */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
-    padding-top: 120px;        /* empêche le logo de passer sous le header */
-    padding-bottom: 60px;      /* espace sous le logo */
+    padding-top: 120px;
+    /* empêche le logo de passer sous le header */
+    padding-bottom: 60px;
+    /* espace sous le logo */
     box-sizing: border-box;
 }
 
@@ -425,8 +494,10 @@ body.admin-bar .main-header {
 
 @media (max-width: 768px) {
     .hero {
-        min-height: 45vh;      /* hero plus compact sur mobile */
-        padding-top: 100px;    /* évite le header */
+        min-height: 45vh;
+        /* hero plus compact sur mobile */
+        padding-top: 100px;
+        /* évite le header */
         padding-bottom: 40px;
     }
 
@@ -438,8 +509,10 @@ body.admin-bar .main-header {
 
 @media (max-width: 480px) {
     .hero {
-        min-height: 40vh;      /* encore plus compact */
-        padding-top: 90px;     /* évite le header */
+        min-height: 40vh;
+        /* encore plus compact */
+        padding-top: 90px;
+        /* évite le header */
         padding-bottom: 30px;
     }
 
@@ -492,6 +565,7 @@ body.admin-bar .main-header {
             0 0 60px #0099ff,
             0 0 80px #0099ff;
     }
+
     50% {
         text-shadow:
             0 0 18px #33ddff,
@@ -500,6 +574,7 @@ body.admin-bar .main-header {
             0 0 90px #00b7ff,
             0 0 120px #00b7ff;
     }
+
     100% {
         text-shadow:
             0 0 12px #00c8ff,
@@ -512,16 +587,32 @@ body.admin-bar .main-header {
 
 /* Flottement vertical (lévitation) */
 @keyframes floatUpDown {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-    100% { transform: translateY(0); }
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
 }
 
 /* Respiration (léger zoom) */
 @keyframes breathe {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.03); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.03);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 /* Responsive */
@@ -572,7 +663,7 @@ body.page-id-3 .entry-content {
     max-width: 900px;
     margin: 40px auto;
     padding: 40px 25px;
-    background: rgba(0,0,0,0.45);
+    background: rgba(0, 0, 0, 0.45);
     backdrop-filter: blur(6px);
     border-radius: 12px;
     color: #fff;
@@ -623,6 +714,7 @@ body.page-id-3 p {
         margin: 30px auto;
     }
 }
+
 /* WRAPPER GLOBAL POUR FORCER LES MARGES LATÉRALES */
 body.page-id-3 article {
     max-width: 900px;
@@ -651,7 +743,7 @@ body.page-id-3 h1.entry-title {
 
 /* BLOC DE TEXTE FLOU */
 body.page-id-3 .entry-content {
-    background: rgba(0,0,0,0.45);
+    background: rgba(0, 0, 0, 0.45);
     backdrop-filter: blur(6px);
     border-radius: 12px;
     padding: 40px 25px;
@@ -677,10 +769,13 @@ body.page-id-3 .entry-content {
         padding: 30px 15px;
     }
 }
+
 /* Empêche le footer de remonter sur la page d'accueil */
 body.home .site-main {
-    min-height: calc(100vh - 200px); /* ajuste si besoin */
+    min-height: calc(100vh - 200px);
+    /* ajuste si besoin */
 }
+
 /* ===========================
    Bloc d'introduction sous le hero (home uniquement)
 =========================== */
@@ -688,7 +783,7 @@ body.home .home-intro {
     max-width: 900px;
     margin: 40px auto 60px auto;
     padding: 30px 25px;
-    background: rgba(0,0,0,0.45);
+    background: rgba(0, 0, 0, 0.45);
     backdrop-filter: blur(6px);
     border-radius: 12px;
     color: #fff;
@@ -749,6 +844,7 @@ body.home .home-final {
         font-size: 1.2rem;
     }
 }
+
 .menu-forum {
     display: none;
 }
@@ -756,6 +852,7 @@ body.home .home-final {
 body.logged-in .menu-forum {
     display: block;
 }
+
 /* ===========================
    FORMULAIRES MODALES — STYLE PREMIUM WSE
 =========================== */
@@ -804,7 +901,7 @@ body.logged-in .menu-forum {
 .modal-content select:focus,
 .modal-content textarea:focus {
     border-color: #00bfff;
-    box-shadow: 0 0 8px rgba(0,191,255,0.4);
+    box-shadow: 0 0 8px rgba(0, 191, 255, 0.4);
     outline: none;
 }
 
@@ -845,4 +942,30 @@ body.logged-in .menu-forum {
     .modal-content button {
         font-size: 1rem;
     }
+}
+
+/* ===========================
+   FIX MOBILE — MODALE SCROLLABLE
+=========================== */
+
+.modal {
+    overflow-y: auto !important;
+    /* scroll sur toute la modale */
+    -webkit-overflow-scrolling: touch;
+}
+
+.modal-content {
+    max-height: none;
+    /* on enlève la limite */
+}
+
+/* ===========================
+   FIX MOBILE — SELECT RESPONSIVE
+=========================== */
+
+.modal-content select {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    font-size: 1rem;
 }
