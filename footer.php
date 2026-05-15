@@ -13,7 +13,7 @@
     <div class="modal-content" role="dialog" aria-modal="true">
         <span class="close-modal" id="close-modal">&times;</span>
         <h2>Contact</h2>
-
+        <div class="modal-message" id="modal-message"></div>
         <form id="contact-form">
             <label for="contact-name">Nom</label>
             <input type="text" id="contact-name" name="name" required>

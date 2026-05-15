@@ -243,3 +243,44 @@ function wse_ajax_login() {
 }
 add_action('wp_ajax_nopriv_wse_login', 'wse_ajax_login');
 add_action('wp_ajax_wse_login',        'wse_ajax_login');
+
+
+/* ===========================
+   AJAX CONTACT WSE
+=========================== */
+function wse_ajax_contact() {
+
+    // Sécurité minimale
+    if (!isset($_POST['name']) || !isset($_POST['email']) || !isset($_POST['message'])) {
+        wp_send_json_error(['message' => 'Champs manquants.']);
+    }
+
+    $name    = sanitize_text_field($_POST['name']);
+    $email   = sanitize_email($_POST['email']);
+    $message = sanitize_textarea_field($_POST['message']);
+
+    if (!$name || !$email || !$message) {
+        wp_send_json_error(['message' => 'Merci de remplir tous les champs.']);
+    }
+
+    if (!is_email($email)) {
+        wp_send_json_error(['message' => 'Adresse e-mail invalide.']);
+    }
+
+    // Préparation du mail
+    $to = get_option('admin_email'); // <-- tu peux mettre ton adresse perso ici
+    $subject = "Nouveau message de contact WSE";
+    $body = "Nom : $name\nEmail : $email\n\nMessage :\n$message";
+    $headers = ['Content-Type: text/plain; charset=UTF-8'];
+
+    // Envoi
+    $sent = wp_mail($to, $subject, $body, $headers);
+
+    if (!$sent) {
+        wp_send_json_error(['message' => 'Erreur lors de l’envoi du message.']);
+    }
+
+    wp_send_json_success(['message' => 'Message envoyé avec succès !']);
+}
+add_action('wp_ajax_nopriv_wse_contact', 'wse_ajax_contact');
+add_action('wp_ajax_wse_contact',        'wse_ajax_contact');

@@ -109,12 +109,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* ===========================
-       MODALE INSCRIPTION
-    ============================ */
+       MODALE INSCRIPTION — VERSION PREMIUM WSE
+=========================== */
+
     const newAccountBtn = document.getElementById('new-account-btn');
     const registerModal = document.getElementById('register-modal');
     const closeRegisterModal = document.getElementById('close-register-modal');
     const registerForm = document.getElementById('register-form');
+    const registerMessageBox = document.getElementById('register-message'); // <-- message premium
+
+    // Fonction message premium
+    function showModalMessage(targetBox, type, message) {
+        targetBox.className = "modal-message " + type;
+        targetBox.textContent = message;
+        targetBox.style.display = "block";
+
+        setTimeout(() => {
+            targetBox.style.display = "none";
+        }, 3500);
+    }
 
     if (newAccountBtn && registerModal && closeRegisterModal && registerForm) {
 
@@ -130,6 +143,10 @@ document.addEventListener("DOMContentLoaded", () => {
         registerForm.addEventListener("submit", (e) => {
             e.preventDefault();
 
+            const submitBtn = registerForm.querySelector("button[type='submit']");
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Création du compte...";
+
             const formData = new FormData(registerForm);
             formData.append('action', 'wse_register');
 
@@ -139,15 +156,30 @@ document.addEventListener("DOMContentLoaded", () => {
             })
                 .then(res => res.json())
                 .then(data => {
-                    alert(data.message);
+
+                    // Message premium
+                    showModalMessage(registerMessageBox, data.success ? "success" : "error", data.message);
+
                     if (data.success) {
                         if (data.redirect) {
-                            window.location.href = data.redirect;
+                            setTimeout(() => {
+                                window.location.href = data.redirect;
+                            }, 1200);
                         } else {
-                            window.location.reload();
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 1200);
                         }
+                    } else {
+                        // Réactive le bouton si erreur
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = "S'inscrire";
                     }
-
+                })
+                .catch(() => {
+                    showModalMessage(registerMessageBox, "error", "Erreur réseau. Réessayez.");
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = "S'inscrire";
                 });
         });
 
@@ -159,13 +191,27 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+
     /* ===========================
-       MODALE CONNEXION
-    ============================ */
+       MODALE CONNEXION — VERSION PREMIUM WSE
+=========================== */
+
     const loginBtn = document.getElementById('login-btn');
     const loginModal = document.getElementById('login-modal');
     const closeLoginModal = document.getElementById('close-login-modal');
     const loginForm = document.getElementById('login-form');
+    const loginMessageBox = document.getElementById('login-message'); // <-- message premium
+
+    // Fonction message premium (déjà ajoutée dans inscription, mais on la remet si besoin)
+    function showModalMessage(targetBox, type, message) {
+        targetBox.className = "modal-message " + type;
+        targetBox.textContent = message;
+        targetBox.style.display = "block";
+
+        setTimeout(() => {
+            targetBox.style.display = "none";
+        }, 3500);
+    }
 
     if (loginBtn && loginModal && closeLoginModal) {
 
@@ -184,8 +230,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (loginForm && loginModal) {
+
         loginForm.addEventListener("submit", (e) => {
             e.preventDefault();
+
+            const submitBtn = loginForm.querySelector("button[type='submit']");
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Connexion...";
 
             const formData = new FormData(loginForm);
             formData.append('action', 'wse_login');
@@ -196,27 +247,56 @@ document.addEventListener("DOMContentLoaded", () => {
             })
                 .then(res => res.json())
                 .then(data => {
-                    alert(data.message);
+
+                    // Message premium
+                    showModalMessage(loginMessageBox, data.success ? "success" : "error", data.message);
+
                     if (data.success) {
                         if (data.redirect) {
-                            window.location.href = data.redirect;
+                            setTimeout(() => {
+                                window.location.href = data.redirect;
+                            }, 1200);
                         } else {
-                            window.location.reload();
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 1200);
                         }
+                    } else {
+                        // Réactive le bouton si erreur
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = "Se connecter";
                     }
-
+                })
+                .catch(() => {
+                    showModalMessage(loginMessageBox, "error", "Erreur réseau. Réessayez.");
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = "Se connecter";
                 });
         });
     }
 
 
+
     /* ===========================
-       MODALE CONTACT
-    ============================ */
+       MODALE CONTACT — VERSION PREMIUM WSE (AJAX RÉEL)
+=========================== */
+
     const contactBtn = document.getElementById('contact-btn');
     const contactModal = document.getElementById('contact-modal');
     const closeContactModal = document.getElementById('close-modal');
     const contactForm = document.getElementById('contact-form');
+    const contactMessageBox = document.getElementById('contact-message'); // <-- message premium
+
+    // Fonction message premium
+    function showModalMessage(targetBox, type, message) {
+        targetBox.className = "modal-message " + type;
+        targetBox.textContent = message;
+        targetBox.style.display = "block";
+
+        setTimeout(() => {
+            targetBox.style.display = "none";
+        }, 3500);
+    }
 
     if (contactBtn && contactModal && closeContactModal && contactForm) {
 
@@ -230,15 +310,47 @@ document.addEventListener("DOMContentLoaded", () => {
 
         contactForm.addEventListener("submit", (e) => {
             e.preventDefault();
-            alert('Message envoyé (simulation en local).');
-            contactModal.classList.remove('active');
-            contactForm.reset();
+
+            const submitBtn = contactForm.querySelector("button[type='submit']");
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Envoi...";
+
+            const formData = new FormData(contactForm);
+            formData.append('action', 'wse_contact');
+
+            fetch(wolfsoftMain.ajaxUrl, {
+                method: 'POST',
+                body: formData
+            })
+                .then(res => res.json())
+                .then(data => {
+
+                    showModalMessage(contactMessageBox, data.success ? "success" : "error", data.message);
+
+                    if (data.success) {
+                        contactForm.reset();
+
+                        setTimeout(() => {
+                            contactModal.classList.remove('active');
+                        }, 1200);
+                    }
+
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = "Envoyer";
+                })
+                .catch(() => {
+                    showModalMessage(contactMessageBox, "error", "Erreur réseau. Réessayez.");
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = "Envoyer";
+                });
         });
 
         contactModal.addEventListener("click", (e) => {
             if (e.target === contactModal) contactModal.classList.remove('active');
         });
     }
+
+
 
 
     /* ===========================

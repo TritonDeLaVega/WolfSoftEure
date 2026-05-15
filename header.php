@@ -32,6 +32,7 @@
         <div class="modal-content" role="dialog" aria-modal="true">
             <span class="close-modal" id="close-register-modal">&times;</span>
             <h2>Inscription nouveau membre</h2>
+            <div class="modal-message" id="modal-message"></div>
             <form id="register-form">
                 <label>Nom*<input type="text" name="nom" required></label>
                 <label>Prénom*<input type="text" name="prenom" required></label>
@@ -68,6 +69,7 @@
         <div class="modal-content" role="dialog" aria-modal="true">
             <span class="close-modal" id="close-login-modal">&times;</span>
             <h2>Connexion utilisateur</h2>
+            <div class="modal-message" id="modal-message"></div>
             <form id="login-form">
                 <label>E-mail ou pseudo*<input type="text" name="login" required></label>
                 <label>Mot de passe*<input type="password" name="password" required></label>
