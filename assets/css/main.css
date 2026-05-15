@@ -1000,3 +1000,206 @@ body.logged-in .menu-forum {
     from { opacity: 0; transform: translateY(-5px); }
     to   { opacity: 1; transform: translateY(0); }
 }
+
+/* ===========================
+   ESPACE MEMBRE — PREMIUM WSE
+=========================== */
+
+.espace-membre {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.em-header h1 {
+    font-size: 2rem;
+    margin-bottom: 5px;
+}
+
+.em-subtitle {
+    color: #888;
+    margin-bottom: 30px;
+}
+
+.em-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+}
+
+.em-card {
+    background: #0f0f0f6f;
+    border: 1px solid #1f1f1f;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 150, 255, 0.1);
+    transition: 0.2s ease;
+}
+
+.em-card:hover {
+    box-shadow: 0 0 20px rgba(0, 150, 255, 0.2);
+    transform: translateY(-3px);
+}
+
+.em-card h2 {
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+    color: #00aaff;
+}
+
+.em-btn {
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    background: #0077cc;
+    color: white;
+    text-align: center;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.em-btn:hover {
+    background: #0099ff;
+}
+
+
+.em-form {
+    max-width: 500px;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.em-form label {
+    font-weight: bold;
+}
+
+.em-form input {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background: #000000;
+    color: white;
+}
+
+.espace-membre .em-header h1 {
+    font-size: 2.4rem;
+    text-align: center;
+    color: #00bfff;
+    text-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+}
+
+/* ===========================
+   PAGE MODIFIER MON PROFIL — PREMIUM WSE
+=========================== */
+
+.em-form {
+    max-width: 650px;
+    margin: 40px auto;
+    padding: 25px 30px;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(6px);
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 150, 255, 0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.em-form-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #00bfff;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.em-form label {
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.em-form input,
+.em-form select {
+    margin-top: 6px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background: #0f0f0f;
+    color: #fff;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.em-form input:focus,
+.em-form select:focus {
+    border-color: #00bfff;
+    box-shadow: 0 0 8px rgba(0, 191, 255, 0.4);
+    outline: none;
+}
+
+.em-btn-primary {
+    background: #0077cc;
+    color: #fff;
+    padding: 12px 18px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: 0.2s ease;
+    margin-top: 10px;
+}
+
+.em-btn-primary:hover {
+    background: #0099ff;
+    transform: scale(1.03);
+}
+
+.em-form-delete {
+    max-width: 650px;
+    margin: 20px auto 60px auto;
+    text-align: center;
+}
+
+.em-btn-danger {
+    background: #aa0000;
+    color: #fff;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: 0.2s ease;
+}
+
+.em-btn-danger:hover {
+    background: #dd0000;
+    transform: scale(1.03);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .em-form {
+        padding: 20px;
+    }
+
+    .em-form-title {
+        font-size: 1.2rem;
+    }
+
+    .em-btn-primary,
+    .em-btn-danger {
+        font-size: 1rem;
+    }
+}

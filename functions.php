@@ -284,3 +284,119 @@ function wse_ajax_contact() {
 }
 add_action('wp_ajax_nopriv_wse_contact', 'wse_ajax_contact');
 add_action('wp_ajax_wse_contact',        'wse_ajax_contact');
+
+
+/* ===========================
+   MISE À JOUR PROFIL WSE
+=========================== */
+function wse_handle_profile_update() {
+    if ( !is_user_logged_in() ) return;
+
+    // Suppression de compte
+    if ( isset($_POST['wse_delete_account']) ) {
+        if (
+            !isset($_POST['wse_delete_account_nonce']) ||
+            !wp_verify_nonce($_POST['wse_delete_account_nonce'], 'wse_delete_account_action')
+        ) {
+            return;
+        }
+
+        $user_id = get_current_user_id();
+        if ( current_user_can('administrator', $user_id) ) {
+            return; // un admin ne peut pas se supprimer via ce formulaire
+        }
+
+        require_once ABSPATH . 'wp-admin/includes/user.php';
+        wp_delete_user($user_id);
+        wp_redirect(home_url('/'));
+        exit;
+    }
+
+    // Mise à jour profil
+    if ( $_SERVER['REQUEST_METHOD'] !== 'POST' ) return;
+    if ( !isset($_POST['wse_update_profile_nonce']) ||
+         !wp_verify_nonce($_POST['wse_update_profile_nonce'], 'wse_update_profile_action') ) {
+        return;
+    }
+
+    $user_id = get_current_user_id();
+    $user    = get_userdata($user_id);
+
+    $nom        = sanitize_text_field($_POST['wse_nom'] ?? '');
+    $prenom     = sanitize_text_field($_POST['wse_prenom'] ?? '');
+    $pseudo     = sanitize_user($_POST['pseudo'] ?? '');
+    $email      = sanitize_email($_POST['email'] ?? '');
+    $password   = $_POST['password'] ?? '';
+    $adresse    = sanitize_text_field($_POST['wse_adresse'] ?? '');
+    $telephone  = sanitize_text_field($_POST['wse_telephone'] ?? '');
+    $age        = intval($_POST['wse_age'] ?? 0);
+    $team       = sanitize_text_field($_POST['wse_team'] ?? '');
+    $association= sanitize_text_field($_POST['wse_association'] ?? '');
+    $profession = sanitize_text_field($_POST['wse_profession'] ?? '');
+    $hobbies    = sanitize_text_field($_POST['wse_hobbies'] ?? '');
+    $pratique   = sanitize_text_field($_POST['wse_pratique'] ?? '');
+
+    // Vérifs de base
+    if ( !$nom || !$prenom || !$pseudo || !$email || !$adresse || !$telephone || !$age || !$pratique ) {
+        return;
+    }
+
+    if ( !is_email($email) ) {
+        return;
+    }
+
+    // Email déjà pris par un autre
+    $existing_email = get_user_by('email', $email);
+    if ( $existing_email && $existing_email->ID !== $user_id ) {
+        return;
+    }
+
+    // Pseudo déjà pris par un autre
+    $existing_login = get_user_by('login', $pseudo);
+    if ( $existing_login && $existing_login->ID !== $user_id ) {
+        return;
+    }
+
+    // Mise à jour utilisateur
+    $update_data = [
+        'ID'           => $user_id,
+        'user_login'   => $pseudo,
+        'user_email'   => $email,
+        'display_name' => $pseudo,
+        'first_name'   => $prenom,
+        'last_name'    => $nom,
+    ];
+
+    if ( !empty($password) ) {
+        if ( strlen($password) < 8 ) {
+            return;
+        }
+        $update_data['user_pass'] = $password;
+    }
+
+    wp_update_user($update_data);
+
+    // Métas WSE
+    update_user_meta($user_id, 'wse_nom', $nom);
+    update_user_meta($user_id, 'wse_prenom', $prenom);
+    update_user_meta($user_id, 'wse_adresse', $adresse);
+    update_user_meta($user_id, 'wse_telephone', $telephone);
+    update_user_meta($user_id, 'wse_age', $age);
+    update_user_meta($user_id, 'wse_team', $team);
+    update_user_meta($user_id, 'wse_association', $association);
+    update_user_meta($user_id, 'wse_profession', $profession);
+    update_user_meta($user_id, 'wse_hobbies', $hobbies);
+
+    // Pratique : on sécurise "Dieu"
+    $allowed_pratiques = ['Débutant','Occasionnel','Confirmé','Accro','Vétérant','Légende'];
+    if ( current_user_can('administrator') ) {
+        $allowed_pratiques[] = 'Dieu';
+    }
+    if ( in_array($pratique, $allowed_pratiques, true) ) {
+        update_user_meta($user_id, 'wse_pratique', $pratique);
+    }
+
+    wp_redirect( home_url('/espace-membre/?updated=1') );
+    exit;
+}
+add_action('template_redirect', 'wse_handle_profile_update');
