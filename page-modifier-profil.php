@@ -2,8 +2,8 @@
 /* Template Name: Modifier Profil */
 get_header();
 
-if ( !is_user_logged_in() ) {
-    wp_redirect( wp_login_url() );
+if (!is_user_logged_in()) {
+    wp_redirect(wp_login_url());
     exit;
 }
 
@@ -30,10 +30,27 @@ $is_admin = current_user_can('administrator');
         <p class="em-subtitle">Mets à jour tes informations WSE</p>
     </section>
 
-    <form class="em-form" method="post">
+    <form class="em-form" method="post" enctype="multipart/form-data">
+
         <?php wp_nonce_field('wse_update_profile_action', 'wse_update_profile_nonce'); ?>
 
         <h2 class="em-form-title">Identité</h2>
+
+        <label>Avatar actuel</label>
+        <?php
+        $avatar_id = get_user_meta($user->ID, 'wse_avatar', true);
+        if ($avatar_id) {
+            $img = wp_get_attachment_image_src($avatar_id, 'thumbnail');
+            if ($img) {
+                echo '<img src="' . esc_url($img[0]) . '" class="wse-avatar" width="120" height="120" style="margin-bottom:10px;border-radius:8px;">';
+            }
+        } else {
+            echo '<p>Aucun avatar enregistré.</p>';
+        }
+        ?>
+
+        <label for="avatar">Changer d’avatar</label>
+        <input type="file" id="avatar" name="avatar" accept="image/*">
 
         <label>Nom*
             <input type="text" name="wse_nom" value="<?php echo esc_attr($wse_nom); ?>" required>
@@ -91,7 +108,7 @@ $is_admin = current_user_can('administrator');
             <select name="wse_pratique" required>
                 <option value="">Sélectionner</option>
                 <?php
-                $options = ['Débutant','Occasionnel','Confirmé','Accro','Vétérant','Légende'];
+                $options = ['Débutant', 'Occasionnel', 'Confirmé', 'Accro', 'Vétérant', 'Légende'];
                 foreach ($options as $opt) {
                     printf(
                         '<option value="%1$s" %2$s>%1$s</option>',
@@ -109,10 +126,12 @@ $is_admin = current_user_can('administrator');
             </select>
         </label>
 
+        <input type="hidden" name="wse_update_profile" value="1">
+
         <button type="submit" class="em-btn em-btn-primary">Enregistrer les modifications</button>
     </form>
 
-    <?php if ( ! $is_admin ) : ?>
+    <?php if (!$is_admin) : ?>
         <form class="em-form em-form-delete" method="post" onsubmit="return confirm('Es-tu sûr de vouloir supprimer ton compte ? Cette action est définitive.');">
             <?php wp_nonce_field('wse_delete_account_action', 'wse_delete_account_nonce'); ?>
             <button type="submit" name="wse_delete_account" value="1" class="em-btn em-btn-danger">
