@@ -538,10 +538,11 @@ body.admin-bar .main-header {
 }
 
 /* ===========================
-   HERO SUBTITLE — GLOW + FLOTTEMENT PREMIUM
+   HERO SUBTITLE et woocommerce-page h1.page-title — GLOW + FLOTTEMENT PREMIUM
 =========================== */
 
-.hero-subtitle {
+ .hero-subtitle,
+.woocommerce-page h1.page-title {
     margin-top: 20px;
     color: #fff;
     font-size: 2rem;
@@ -1496,4 +1497,128 @@ body.bbpress h1.entry-title {
     border-radius: 50%;
     border: 3px solid rgba(255,255,255,0.3);
     object-fit: cover;
+}
+
+/* =================css boutique WSE================= */
+
+.wse-shop-container {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.wse-products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.wse-products-grid .product {
+    background: #111;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.wse-products-grid .product:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+.wse-products-grid .product img {
+    border-radius: 10px;
+}
+
+.wse-products-grid .woocommerce-loop-product__title {
+    font-size: 1.2rem;
+    margin-top: 15px;
+    color: #fff;
+}
+
+.wse-products-grid .price {
+    color: #0f0;
+    font-size: 1.1rem;
+    margin: 10px 0;
+}
+
+.wse-products-grid .button {
+    background: #0f0;
+    color: #000;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background .2s ease;
+}
+
+.wse-products-grid .button:hover {
+    background: #9f0;
+}
+
+
+/* Wrapper général de la page produit */
+.wse-product-wrapper {
+    max-width: 1100px;
+    margin: 60px auto;
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(6px);
+    border-radius: 12px;
+    color: #fff;
+}
+
+/* Texte blanc partout */
+.wse-product-wrapper h1,
+.wse-product-wrapper h2,
+.wse-product-wrapper h3,
+.wse-product-wrapper p,
+.wse-product-wrapper li,
+.wse-product-wrapper span {
+    color: #fff !important;
+}
+
+/* Prix en vert WSE */
+.wse-product-wrapper .price {
+    color: #0f0 !important;
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+/* Bouton Ajouter au panier */
+.wse-product-wrapper .single_add_to_cart_button {
+    background: rgb(0, 106, 255) !important;
+    color: #000 !important;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: 0.2s ease;
+}
+
+.wse-product-wrapper .single_add_to_cart_button:hover {
+    background: rgb(0, 217, 255) !important;
+}
+/* Couleur des catégories et marques (liens) */
+.wse-product-wrapper .product_meta a {
+    color: #8acbff !important;
+    font-weight: 600;
+}
+
+/* Texte "Catégorie :" et "Marque :" */
+.wse-product-wrapper .product_meta {
+    color: #fff !important;
+}
+
+/* Au survol */
+.wse-product-wrapper .product_meta a:hover {
+    color: #b7e0ff !important;
+}
+
+/* Texte "Voici le seul résultat" */
+.woocommerce-result-count {
+    color: #ffffff !important;
+    font-size: 1.1rem;
+    text-align: left;
+    margin-bottom: 20px;
+    opacity: 0.9;
 }

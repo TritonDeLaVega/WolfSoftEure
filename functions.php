@@ -594,3 +594,18 @@ add_filter('get_avatar', function ($avatar, $id_or_email, $size) {
 
     return $avatar;
 }, 10, 3);
+
+
+add_action('after_setup_theme', function () {
+    add_theme_support('wc-product-gallery-zoom');
+    add_theme_support('wc-product-gallery-lightbox');
+    add_theme_support('wc-product-gallery-slider');
+});
+
+
+add_action('wp_enqueue_scripts', function () {
+    wp_enqueue_script('wc-single-product');
+    wp_enqueue_script('wc-product-gallery');
+    wp_enqueue_script('wc-product-gallery-slider');
+    wp_enqueue_script('wc-product-gallery-lightbox');
+}, 20);
