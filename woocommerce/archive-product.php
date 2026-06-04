@@ -26,12 +26,12 @@ get_header(); ?>
 
         <?php do_action('woocommerce_before_shop_loop'); ?>
 
-        <div class="wse-products-grid">
-            <?php while (have_posts()) : ?>
-                <?php the_post(); ?>
+        <!-- CORRECTION MAJEURE : UL OBLIGATOIRE POUR WOOCOMMERCE -->
+        <ul class="products wse-products-grid">
+            <?php while (have_posts()) : the_post(); ?>
                 <?php wc_get_template_part('content', 'product'); ?>
             <?php endwhile; ?>
-        </div>
+        </ul>
 
         <?php do_action('woocommerce_after_shop_loop'); ?>
 
