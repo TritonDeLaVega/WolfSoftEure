@@ -1581,15 +1581,32 @@ body.bbpress h1.entry-title {
 /* Grille produits WSE */
 ul.products.wse-products-grid {
     display: grid !important;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 30px;
+    width: 100% !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    grid-auto-columns: minmax(0, 1fr) !important;
+    grid-auto-flow: row !important;
+    justify-items: stretch !important;
+    align-items: start !important;
+    place-items: start stretch !important;
+    gap: 30px !important;
     margin-top: 40px;
     padding: 0;
     list-style: none;
 }
 
+ul.products.wse-products-grid::before,
+ul.products.wse-products-grid::after {
+    display: none !important;
+    content: none !important;
+}
+
 /* Card produit */
 ul.products.wse-products-grid li.product {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
     background: #11111193;
     border-radius: 12px;
     padding: 20px;
@@ -1648,6 +1665,31 @@ ul.products.wse-products-grid li.product a.wp-element-button:hover {
     color: #000 !important;
 }
 
+/* Barre d'outils shop */
+.wse-shop-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 20px;
+}
+
+.wse-shop-toolbar .woocommerce-result-count,
+.wse-shop-toolbar .woocommerce-ordering {
+    margin: 0;
+}
+
+.wse-shop-toolbar .woocommerce-ordering {
+    width: auto;
+    min-width: 220px;
+}
+
+.wse-shop-toolbar .woocommerce-result-count {
+    color: #ffffff !important;
+    white-space: nowrap;
+}
+
 /* Select tri */
 .woocommerce-ordering {
     width: 100%;
@@ -1657,6 +1699,15 @@ ul.products.wse-products-grid li.product a.wp-element-button:hover {
 
 /* Responsive mobile */
 @media (max-width: 768px) {
+    .wse-shop-toolbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .wse-shop-toolbar .woocommerce-ordering {
+        width: 100%;
+    }
+
     ul.products.wse-products-grid {
         grid-template-columns: 1fr;
         justify-items: center;
@@ -1679,12 +1730,123 @@ ul.products.wse-products-grid li.product a.wp-element-button:hover {
 /* Force le GRID WSE */
 body.woocommerce ul.products.wse-products-grid {
     display: grid !important;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)) !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    grid-auto-columns: minmax(0, 1fr) !important;
+    grid-auto-flow: row !important;
+    justify-items: stretch !important;
+    align-items: start !important;
+    place-items: start stretch !important;
     gap: 30px !important;
 }
 
 /* Empêche WooCommerce de rétrécir les cards */
 body.woocommerce ul.products.wse-products-grid li.product {
-    width: auto !important;
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
     flex: none !important;
+    float: none !important;
+    clear: none !important;
+    grid-column: auto !important;
+    grid-row: auto !important;
+    box-sizing: border-box !important;
+}
+
+ul.products.wse-products-grid li.product {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    align-self: stretch !important;
+    float: none !important;
+    clear: none !important;
+    grid-column: auto !important;
+    grid-row: auto !important;
+}
+
+ul.products.wse-products-grid li.product * {
+    min-width: 0 !important;
+}
+
+ul.products.wse-products-grid {
+    min-width: 0 !important;
+}
+
+ul.products.wse-products-grid li.product .woocommerce-loop-product__title,
+ul.products.wse-products-grid li.product .woocommerce-loop-product__title a {
+    white-space: normal !important;
+    word-break: break-word !important;
+}
+
+ul.products.wse-products-grid li.product .price,
+ul.products.wse-products-grid li.product a.button,
+ul.products.wse-products-grid li.product a.add_to_cart_button,
+ul.products.wse-products-grid li.product a.ajax_add_to_cart,
+ul.products.wse-products-grid li.product a.product_type_simple,
+ul.products.wse-products-grid li.product a.wp-element-button {
+    min-width: 0 !important;
+}
+
+/* Fix hauteur image */
+ul.products.wse-products-grid li.product img {
+    height: 220px;
+    object-fit: cover;
+    width: 100%;
+}
+
+/* Fix hauteur du titre */
+ul.products.wse-products-grid li.product .woocommerce-loop-product__title {
+    min-height: 48px; /* 2 lignes */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Fix hauteur du prix */
+ul.products.wse-products-grid li.product .price {
+    min-height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Fix hauteur du bouton */
+ul.products.wse-products-grid li.product a.button,
+ul.products.wse-products-grid li.product a.add_to_cart_button,
+ul.products.wse-products-grid li.product a.ajax_add_to_cart,
+ul.products.wse-products-grid li.product a.product_type_simple,
+ul.products.wse-products-grid li.product a.wp-element-button {
+    min-height: 48px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+/* Positionne le filtre sans pousser la grille */
+.woocommerce-ordering {
+    position: absolute;
+    top: -50px; /* ajuste selon ton goût */
+    right: 0;
+    z-index: 10;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.wse-shop-toolbar .woocommerce-ordering {
+    position: static !important;
+    top: auto !important;
+    right: auto !important;
+    width: auto !important;
+    min-width: 0 !important;
+}
+
+/* Pour éviter que le UL remonte trop */
+.wse-shop-container {
+    position: relative;
+    padding-top: 60px; /* espace pour le filtre */
+}
+/* Force 3 colonnes fixes sur desktop */
+@media (min-width: 900px) {
+    ul.products.wse-products-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
 }

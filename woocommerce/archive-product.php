@@ -24,7 +24,9 @@ get_header(); ?>
 
     <?php if (woocommerce_product_loop()) : ?>
 
-        <?php do_action('woocommerce_before_shop_loop'); ?>
+        <div class="wse-shop-toolbar">
+            <?php do_action('woocommerce_before_shop_loop'); ?>
+        </div>
 
         <!-- CORRECTION MAJEURE : UL OBLIGATOIRE POUR WOOCOMMERCE -->
         <ul class="products wse-products-grid">
