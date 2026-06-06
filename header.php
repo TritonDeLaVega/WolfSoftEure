@@ -93,6 +93,20 @@
             </div>
 
         </div>
+        <div class="header-right">
+            <?php if (function_exists('wc_get_cart_url')) : ?>
+                <?php
+                $cart_count = 0;
+                if (function_exists('WC') && WC()->cart) {
+                    $cart_count = WC()->cart->get_cart_contents_count();
+                }
+                ?>
+                <a class="header-cart" href="<?php echo esc_url(wc_get_cart_url()); ?>" aria-label="Voir le panier">
+                    <span class="cart-icon" aria-hidden="true">🛒</span>
+                    <span class="cart-count"><?php echo esc_html($cart_count); ?></span>
+                </a>
+            <?php endif; ?>
+        </div>
         <button class="burger-menu" id="burger-button" aria-label="Ouvrir le menu">
             <span></span>
             <span></span>
