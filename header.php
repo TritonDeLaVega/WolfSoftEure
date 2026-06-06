@@ -106,12 +106,12 @@
                     <span class="cart-count"><?php echo esc_html($cart_count); ?></span>
                 </a>
             <?php endif; ?>
+            <button class="burger-menu" id="burger-button" aria-label="Ouvrir le menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
-        <button class="burger-menu" id="burger-button" aria-label="Ouvrir le menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
     </header>
 
     <nav class="fullscreen-menu" id="fullscreen-menu">
