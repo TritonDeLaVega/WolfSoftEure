@@ -61,14 +61,16 @@ add_action('wp_enqueue_scripts', function () {
     wp_enqueue_style(
         'child-style',
         get_stylesheet_directory_uri() . '/style.css',
-        ['parent-style']
+        ['parent-style'],
+        filemtime(get_stylesheet_directory() . '/style.css')
     );
 
     // Style global
     wp_enqueue_style(
         'wolfsofteure-main',
         get_stylesheet_directory_uri() . '/assets/css/main.css',
-        ['child-style']
+        ['child-style'],
+        filemtime(get_stylesheet_directory() . '/assets/css/main.css')
     );
 
     // Style terrain uniquement sur la page "terrain"
@@ -76,7 +78,8 @@ add_action('wp_enqueue_scripts', function () {
         wp_enqueue_style(
             'wolfsofteure-terrain',
             get_stylesheet_directory_uri() . '/assets/css/terrain.css',
-            ['wolfsofteure-main']
+            ['wolfsofteure-main'],
+            filemtime(get_stylesheet_directory() . '/assets/css/terrain.css')
         );
     }
 
@@ -85,7 +88,7 @@ add_action('wp_enqueue_scripts', function () {
         'wolfsofteure-main-js',
         get_stylesheet_directory_uri() . '/assets/js/main.js',
         [],
-        null,
+        filemtime(get_stylesheet_directory() . '/assets/js/main.js'),
         true
     );
 
@@ -99,7 +102,7 @@ add_action('wp_enqueue_scripts', function () {
         'wolfsofteure-home-js',
         get_stylesheet_directory_uri() . '/assets/js/home.js',
         ['wolfsofteure-main-js'],
-        null,
+        filemtime(get_stylesheet_directory() . '/assets/js/home.js'),
         true
     );
 
@@ -626,12 +629,3 @@ add_action('after_setup_theme', function () {
     add_theme_support('wc-product-gallery-lightbox');
     add_theme_support('wc-product-gallery-slider');
 });
-
-
-add_action('wp_enqueue_scripts', function () {
-    wp_enqueue_script('wc-single-product');
-    wp_enqueue_script('wc-product-gallery');
-    wp_enqueue_script('wc-product-gallery-slider');
-    wp_enqueue_script('wc-product-gallery-lightbox');
-    wp_enqueue_script('wc-cart-fragments');
-}, 20);

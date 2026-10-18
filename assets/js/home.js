@@ -5,66 +5,48 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!bg || !bgNext) return;
 
     const images = [
-        'terrain_1.jpg', 'terrain_2.jpg', 'terrain_3.jpg',
-        'terrain_4.jpg', 'terrain_5.jpg', 'terrain_6.jpg',
-        'terrain_7.jpg', 'terrain_8.jpg', 'terrain_9.jpg',
-        'terrain_10.jpg', 'terrain_11.jpg', 'BannerWseOldSchool.jpg'
+        'home-backgrounds/terrain_1.jpg', 'home-backgrounds/terrain_2.jpg',
+        'home-backgrounds/terrain_3.jpg', 'home-backgrounds/terrain_4.jpg',
+        'home-backgrounds/terrain_5.jpg', 'home-backgrounds/terrain_6.jpg',
+        'home-backgrounds/terrain_7.jpg', 'home-backgrounds/terrain_8.jpg',
+        'home-backgrounds/terrain_9.jpg', 'home-backgrounds/terrain_10.jpg',
+        'home-backgrounds/terrain_11.jpg', 'home-backgrounds/BannerWseOldSchool.jpg'
     ];
 
     const themeUrl = wolfsoftHome.themeUrl + '/assets/images/';
-    let index = Math.floor(Math.random() * images.length);
+    let currentIndex = Math.floor(Math.random() * images.length);
 
-    // === PRÉCHARGEMENT DES IMAGES ===
-    const loadedImages = [];
-    let loadedCount = 0;
-
-    images.forEach((img, i) => {
+    function loadAndShow(index, attempts, isInitialImage) {
         const image = new Image();
-        image.src = themeUrl + img;
         image.onload = () => {
-            loadedImages[i] = image;
-            loadedCount++;
-        };
-    });
+            if (isInitialImage) {
+                bg.style.backgroundImage = `url(${image.src})`;
+                bg.classList.add("active");
+                setTimeout(() => loadAndShow((index + 1) % images.length, 0, false), 5000);
+                return;
+            }
 
-    // Attendre que toutes les images soient chargées
-    function waitForPreload() {
-        if (loadedCount === images.length) {
-            startSlider();
-        } else {
-            requestAnimationFrame(waitForPreload);
-        }
-    }
-
-    waitForPreload();
-
-    // === SLIDER ===
-    function startSlider() {
-        bg.style.backgroundImage = `url(${themeUrl + images[index]})`;
-        bg.classList.add("active");
-
-        function nextImage() {
-            const nextIndex = (index + 1) % images.length;
-
-            // L'image est déjà chargée → aucun flash possible
-            bgNext.style.backgroundImage = `url(${themeUrl + images[nextIndex]})`;
-
-            // Fade-in de la nouvelle image
+            bgNext.style.backgroundImage = `url(${image.src})`;
             bgNext.classList.add("active");
 
             setTimeout(() => {
-                // On remplace l'image principale
                 bg.style.backgroundImage = bgNext.style.backgroundImage;
-
-                // On remet bgNext invisible
                 bgNext.classList.remove("active");
-
-                index = nextIndex;
-
-                setTimeout(nextImage, 5000);
+                currentIndex = index;
+                setTimeout(() => loadAndShow((currentIndex + 1) % images.length, 0, false), 5000);
             }, 1000);
-        }
+        };
 
-        setTimeout(nextImage, 5000);
+        image.onerror = () => {
+            if (attempts + 1 < images.length) {
+                loadAndShow((index + 1) % images.length, attempts + 1, isInitialImage);
+                return;
+            }
+
+            setTimeout(() => loadAndShow(index, 0, isInitialImage), 5000);
+        };
+        image.src = themeUrl + images[index];
     }
+
+    loadAndShow(currentIndex, 0, true);
 });

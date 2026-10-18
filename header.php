@@ -18,7 +18,10 @@
     <div class="hero">
         <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/pvc-patch-no-BG.png"
             alt="Logo WSE"
-            class="logo-centered">
+            class="logo-centered"
+            width="1080"
+            height="1004"
+            fetchpriority="high">
         <?php if (is_front_page()) : ?>
             <p class="hero-subtitle">Bienvenue sur le site&nbsp;!</p>
         <?php endif; ?>
@@ -29,10 +32,10 @@
 
     <!-- Modale d'inscription -->
     <div class="modal" id="register-modal" aria-hidden="true">
-        <div class="modal-content" role="dialog" aria-modal="true">
-            <span class="close-modal" id="close-register-modal">&times;</span>
-            <h2>Inscription nouveau membre</h2>
-            <div class="modal-message" id="modal-message"></div>
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="register-modal-title">
+            <button type="button" class="close-modal" id="close-register-modal" aria-label="Fermer la fenêtre d'inscription">&times;</button>
+            <h2 id="register-modal-title">Inscription nouveau membre</h2>
+            <div class="modal-message" id="register-message" role="status" aria-live="polite" aria-atomic="true"></div>
             <form id="register-form">
                 <label>Nom*<input type="text" name="nom" required></label>
                 <label>Prénom*<input type="text" name="prenom" required></label>
@@ -66,10 +69,10 @@
 
     <!-- Modale de connexion -->
     <div class="modal" id="login-modal" aria-hidden="true">
-        <div class="modal-content" role="dialog" aria-modal="true">
-            <span class="close-modal" id="close-login-modal">&times;</span>
-            <h2>Connexion utilisateur</h2>
-            <div class="modal-message" id="modal-message"></div>
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="login-modal-title">
+            <button type="button" class="close-modal" id="close-login-modal" aria-label="Fermer la fenêtre de connexion">&times;</button>
+            <h2 id="login-modal-title">Connexion utilisateur</h2>
+            <div class="modal-message" id="login-message" role="status" aria-live="polite" aria-atomic="true"></div>
             <form id="login-form">
                 <label>E-mail ou pseudo*<input type="text" name="login" required></label>
                 <label>Mot de passe*<input type="password" name="password" required></label>
@@ -106,7 +109,7 @@
                     <span class="cart-count"><?php echo esc_html($cart_count); ?></span>
                 </a>
             <?php endif; ?>
-            <button class="burger-menu" id="burger-button" aria-label="Ouvrir le menu">
+            <button class="burger-menu" id="burger-button" aria-label="Ouvrir le menu" aria-controls="fullscreen-menu" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -114,7 +117,7 @@
         </div>
     </header>
 
-    <nav class="fullscreen-menu" id="fullscreen-menu">
+    <nav class="fullscreen-menu" id="fullscreen-menu" aria-hidden="true">
         <button id="close-menu" aria-label="Fermer le menu">×</button>
         <?php
         wp_nav_menu([

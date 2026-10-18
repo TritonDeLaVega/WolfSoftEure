@@ -206,12 +206,15 @@ main,
     z-index: 100;
     opacity: 0;
     pointer-events: none;
-    transition: opacity .3s ease;
+    visibility: hidden;
+    transition: opacity .3s ease, visibility 0s linear .3s;
 }
 
 .fullscreen-menu.active {
     opacity: 1;
     pointer-events: auto;
+    visibility: visible;
+    transition: opacity .3s ease;
 }
 
 .fullscreen-menu ul {
@@ -260,12 +263,15 @@ main,
     box-sizing: border-box;
     opacity: 0;
     pointer-events: none;
-    transition: opacity .3s ease;
+    visibility: hidden;
+    transition: opacity .3s ease, visibility 0s linear .3s;
 }
 
 .modal.active {
     opacity: 1;
     pointer-events: auto;
+    visibility: visible;
+    transition: opacity .3s ease;
 }
 
 .modal-content {
@@ -285,6 +291,28 @@ main,
     right: 15px;
     font-size: 2rem;
     cursor: pointer;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    line-height: 1;
+}
+
+.modal-content .close-modal {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    width: auto;
+    border-radius: 0;
+    font-size: 2rem;
+    font-weight: normal;
+    transition: none;
+}
+
+.modal-content .close-modal:hover {
+    background: transparent;
+    transform: none;
 }
 
 /* ===========================

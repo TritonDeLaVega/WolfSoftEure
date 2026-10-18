@@ -15,6 +15,39 @@ document.addEventListener("DOMContentLoaded", () => {
     ============================ */
     const themeUrl = wolfsoftMain.themeUrl + '/assets/images/';
     const soundUrl = wolfsoftMain.themeUrl + '/assets/sounds/';
+    const modalTriggers = new WeakMap();
+
+    function setModalState(modal, isOpen, trigger = document.activeElement) {
+        modal.classList.toggle('active', isOpen);
+        modal.setAttribute('aria-hidden', String(!isOpen));
+
+        if (isOpen) {
+            modalTriggers.set(modal, trigger);
+            modal.querySelector('button, input, select, textarea, a[href]')?.focus();
+            return;
+        }
+
+        const returnFocus = modalTriggers.get(modal);
+        modalTriggers.delete(modal);
+        if (returnFocus instanceof HTMLElement && returnFocus.isConnected) returnFocus.focus();
+    }
+
+    function showModalMessage(targetBox, type, message) {
+        targetBox.className = "modal-message " + type;
+        targetBox.textContent = message;
+        targetBox.style.display = "block";
+
+        setTimeout(() => {
+            targetBox.style.display = "none";
+        }, 3500);
+    }
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Escape') return;
+
+        const openModal = document.querySelector('.modal.active');
+        if (openModal) setModalState(openModal, false);
+    });
 
 
     /* ===========================
@@ -91,19 +124,30 @@ document.addEventListener("DOMContentLoaded", () => {
     if (burger && menu && closeBtn) {
         burger.addEventListener("click", () => {
             menu.classList.add("active");
+            menu.setAttribute('aria-hidden', 'false');
+            burger.setAttribute('aria-expanded', 'true');
             document.body.style.overflow = "hidden";
+            menu.querySelector('a')?.focus();
         });
 
-        closeBtn.addEventListener("click", () => {
+        const closeMenu = () => {
             menu.classList.remove("active");
+            menu.setAttribute('aria-hidden', 'true');
+            burger.setAttribute('aria-expanded', 'false');
             document.body.style.overflow = "";
-        });
+            burger.focus();
+        };
+
+        closeBtn.addEventListener("click", closeMenu);
 
         menu.addEventListener("click", (e) => {
             if (e.target === menu) {
-                menu.classList.remove("active");
-                document.body.style.overflow = "";
+                closeMenu();
             }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && menu.classList.contains('active')) closeMenu();
         });
     }
 
@@ -116,28 +160,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const registerModal = document.getElementById('register-modal');
     const closeRegisterModal = document.getElementById('close-register-modal');
     const registerForm = document.getElementById('register-form');
-    const registerMessageBox = document.getElementById('register-message'); // <-- message premium
-
-    // Fonction message premium
-    function showModalMessage(targetBox, type, message) {
-        targetBox.className = "modal-message " + type;
-        targetBox.textContent = message;
-        targetBox.style.display = "block";
-
-        setTimeout(() => {
-            targetBox.style.display = "none";
-        }, 3500);
-    }
+    const registerMessageBox = document.getElementById('register-message');
 
     if (newAccountBtn && registerModal && closeRegisterModal && registerForm) {
 
         newAccountBtn.addEventListener("click", (e) => {
             e.preventDefault();
-            registerModal.classList.add('active');
+            setModalState(registerModal, true, newAccountBtn);
         });
 
         closeRegisterModal.addEventListener("click", () => {
-            registerModal.classList.remove('active');
+            setModalState(registerModal, false);
         });
 
         registerForm.addEventListener("submit", (e) => {
@@ -185,7 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         registerModal.addEventListener("click", (e) => {
             if (e.target === registerModal) {
-                registerModal.classList.remove('active');
+                setModalState(registerModal, false);
             }
         });
     }
@@ -200,32 +233,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const loginModal = document.getElementById('login-modal');
     const closeLoginModal = document.getElementById('close-login-modal');
     const loginForm = document.getElementById('login-form');
-    const loginMessageBox = document.getElementById('login-message'); // <-- message premium
-
-    // Fonction message premium (déjà ajoutée dans inscription, mais on la remet si besoin)
-    function showModalMessage(targetBox, type, message) {
-        targetBox.className = "modal-message " + type;
-        targetBox.textContent = message;
-        targetBox.style.display = "block";
-
-        setTimeout(() => {
-            targetBox.style.display = "none";
-        }, 3500);
-    }
+    const loginMessageBox = document.getElementById('login-message');
 
     if (loginBtn && loginModal && closeLoginModal) {
 
         loginBtn.addEventListener("click", (e) => {
             e.preventDefault();
-            loginModal.classList.add('active');
+            setModalState(loginModal, true, loginBtn);
         });
 
         closeLoginModal.addEventListener("click", () => {
-            loginModal.classList.remove('active');
+            setModalState(loginModal, false);
         });
 
         loginModal.addEventListener("click", (e) => {
-            if (e.target === loginModal) loginModal.classList.remove('active');
+            if (e.target === loginModal) setModalState(loginModal, false);
         });
     }
 
@@ -285,27 +307,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const contactModal = document.getElementById('contact-modal');
     const closeContactModal = document.getElementById('close-modal');
     const contactForm = document.getElementById('contact-form');
-    const contactMessageBox = document.getElementById('contact-message'); // <-- message premium
-
-    // Fonction message premium
-    function showModalMessage(targetBox, type, message) {
-        targetBox.className = "modal-message " + type;
-        targetBox.textContent = message;
-        targetBox.style.display = "block";
-
-        setTimeout(() => {
-            targetBox.style.display = "none";
-        }, 3500);
-    }
+    const contactMessageBox = document.getElementById('contact-message-status');
 
     if (contactBtn && contactModal && closeContactModal && contactForm) {
 
         contactBtn.addEventListener("click", () => {
-            contactModal.classList.add('active');
+            setModalState(contactModal, true, contactBtn);
         });
 
         closeContactModal.addEventListener("click", () => {
-            contactModal.classList.remove('active');
+            setModalState(contactModal, false);
         });
 
         contactForm.addEventListener("submit", (e) => {
@@ -331,7 +342,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         contactForm.reset();
 
                         setTimeout(() => {
-                            contactModal.classList.remove('active');
+                            setModalState(contactModal, false);
                         }, 1200);
                     }
 
@@ -346,7 +357,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         contactModal.addEventListener("click", (e) => {
-            if (e.target === contactModal) contactModal.classList.remove('active');
+            if (e.target === contactModal) setModalState(contactModal, false);
         });
     }
 
