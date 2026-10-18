@@ -138,6 +138,7 @@ main,
 }
 
 .scar-img {
+    width: 220px;
     max-height: 55px;
     margin-left: 1rem;
 }
@@ -380,6 +381,7 @@ main,
     }
 
     .scar-img {
+        width: 140px;
         max-height: 35px;
         margin-left: 0.5rem;
     }
@@ -409,6 +411,7 @@ main,
     }
 
     .scar-img {
+        width: 113px;
         max-height: 28px;
         margin-left: 0.3rem;
     }
@@ -2304,9 +2307,10 @@ ul.products.wse-products-grid li.product a.wp-element-button {
 
 /* Fix hauteur image */
 ul.products.wse-products-grid li.product img {
-    height: 220px;
+    aspect-ratio: 1;
     object-fit: cover;
     width: 100%;
+    height: auto;
 }
 
 /* Fix hauteur du titre */
@@ -2324,6 +2328,7 @@ ul.products.wse-products-grid li.product .price {
     display: flex;
     align-items: center;
     justify-content: center;
+    color: #ffffff !important;
 }
 
 /* Fix hauteur du bouton */

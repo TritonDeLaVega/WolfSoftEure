@@ -5,16 +5,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!bg || !bgNext) return;
 
     const images = [
-        'home-backgrounds/terrain_1.jpg', 'home-backgrounds/terrain_2.jpg',
-        'home-backgrounds/terrain_3.jpg', 'home-backgrounds/terrain_4.jpg',
-        'home-backgrounds/terrain_5.jpg', 'home-backgrounds/terrain_6.jpg',
-        'home-backgrounds/terrain_7.jpg', 'home-backgrounds/terrain_8.jpg',
-        'home-backgrounds/terrain_9.jpg', 'home-backgrounds/terrain_10.jpg',
-        'home-backgrounds/terrain_11.jpg', 'home-backgrounds/BannerWseOldSchool.jpg'
+        'terrain_1', 'terrain_2', 'terrain_3', 'terrain_4',
+        'terrain_5', 'terrain_6', 'terrain_7', 'terrain_8',
+        'terrain_9', 'terrain_10', 'terrain_11', 'BannerWseOldSchool'
     ];
 
     const themeUrl = wolfsoftHome.themeUrl + '/assets/images/';
-    let currentIndex = images.findIndex(image => bg.style.backgroundImage.includes(image));
+    let imageFormat = 'avif';
+    let currentIndex = images.indexOf(bg.dataset.backgroundImage);
     const hasInitialBackground = currentIndex !== -1;
 
     if (!hasInitialBackground) {
@@ -26,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
         image.onload = () => {
             if (isInitialImage) {
                 bg.style.backgroundImage = `url(${image.src})`;
+                bg.dataset.backgroundImage = images[index];
                 bg.classList.add("active");
                 setTimeout(() => loadAndShow((index + 1) % images.length, 0, false), 5000);
                 return;
@@ -38,11 +37,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 bg.style.backgroundImage = bgNext.style.backgroundImage;
                 bgNext.classList.remove("active");
                 currentIndex = index;
+                bg.dataset.backgroundImage = images[index];
                 setTimeout(() => loadAndShow((currentIndex + 1) % images.length, 0, false), 5000);
             }, 1000);
         };
 
         image.onerror = () => {
+            if (imageFormat === 'avif') {
+                imageFormat = 'jpg';
+                loadAndShow(index, attempts, isInitialImage);
+                return;
+            }
+
             if (attempts + 1 < images.length) {
                 loadAndShow((index + 1) % images.length, attempts + 1, isInitialImage);
                 return;
@@ -50,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             setTimeout(() => loadAndShow(index, 0, isInitialImage), 5000);
         };
-        image.src = themeUrl + images[index];
+        image.src = themeUrl + 'home-backgrounds/' + images[index] + '.' + imageFormat;
     }
 
     if (hasInitialBackground) {

@@ -29,23 +29,24 @@ function wolfsofteure_background_image_url()
 
     if ($background_url === null) {
         $images = [
-            'terrain_1.jpg',
-            'terrain_2.jpg',
-            'terrain_3.jpg',
-            'terrain_4.jpg',
-            'terrain_5.jpg',
-            'terrain_6.jpg',
-            'terrain_7.jpg',
-            'terrain_8.jpg',
-            'terrain_9.jpg',
-            'terrain_10.jpg',
-            'terrain_11.jpg',
-            'BannerWseOldSchool.jpg',
+            'terrain_1',
+            'terrain_2',
+            'terrain_3',
+            'terrain_4',
+            'terrain_5',
+            'terrain_6',
+            'terrain_7',
+            'terrain_8',
+            'terrain_9',
+            'terrain_10',
+            'terrain_11',
+            'BannerWseOldSchool',
         ];
 
         $background_url = get_stylesheet_directory_uri()
             . '/assets/images/home-backgrounds/'
-            . $images[wp_rand(0, count($images) - 1)];
+            . $images[wp_rand(0, count($images) - 1)]
+            . '.avif';
     }
 
     return $background_url;
@@ -53,7 +54,7 @@ function wolfsofteure_background_image_url()
 
 add_action('wp_head', function () {
     printf(
-        '<link rel="preload" as="image" href="%s" fetchpriority="high">' . "\n",
+        '<link rel="preload" as="image" href="%s" type="image/avif" fetchpriority="low">' . "\n",
         esc_url(wolfsofteure_background_image_url())
     );
 
@@ -86,6 +87,43 @@ add_filter('render_block_woocommerce/coming-soon', function ($block_content) {
 
     return '<main id="main-content" class="site-main woocommerce-coming-soon">' . $block_content . '</main>';
 });
+
+add_filter('wp_get_attachment_image_attributes', function ($attr, $attachment) {
+    if (!is_shop() || empty($attr['src'])) {
+        return $attr;
+    }
+
+    $product_images = [
+        'Capture-decran-2026-06-04-110613' => 'billes-bio-020',
+        'Capture-decran-2026-06-04-100407' => 'billes-bio-025',
+        'Capture-decran-2026-06-04-111505' => 'gilet-drake-mk4',
+        'Capture-decran-2026-06-04-113013' => 'glock-18c-we-gen4',
+        'Capture-decran-2026-06-04-102130' => 'lunettes-bolle-bl30',
+        'scarhMarui1' => 'scar-h-marui-ebb',
+    ];
+    $filename = wp_basename(wp_parse_url($attr['src'], PHP_URL_PATH));
+    $product_image = null;
+
+    foreach ($product_images as $prefix => $slug) {
+        if (strpos($filename, $prefix) === 0) {
+            $product_image = $slug;
+            break;
+        }
+    }
+
+    if ($product_image === null) {
+        return $attr;
+    }
+
+    $image_url = get_stylesheet_directory_uri() . '/assets/images/products/' . $product_image;
+    $attr['src'] = $image_url . '-270.webp';
+    $attr['srcset'] = $image_url . '-270.webp 270w, ' . $image_url . '-440.webp 440w';
+    $attr['sizes'] = '(max-width: 600px) 28vw, 220px';
+    $attr['width'] = 270;
+    $attr['height'] = 270;
+
+    return $attr;
+}, 10, 2);
 
 add_filter('woocommerce_cart_item_name', function ($product_name, $cart_item, $cart_item_key) {
     if (!is_checkout()) {
@@ -121,19 +159,11 @@ add_action('wp_enqueue_scripts', function () {
         get_template_directory_uri() . '/style.css'
     );
 
-    // Style enfant
-    wp_enqueue_style(
-        'child-style',
-        get_stylesheet_directory_uri() . '/style.css',
-        ['parent-style'],
-        filemtime(get_stylesheet_directory() . '/style.css')
-    );
-
     // Style global
     wp_enqueue_style(
         'wolfsofteure-main',
         get_stylesheet_directory_uri() . '/assets/css/main.css',
-        ['child-style'],
+        ['parent-style'],
         filemtime(get_stylesheet_directory() . '/assets/css/main.css')
     );
 
@@ -161,19 +191,20 @@ add_action('wp_enqueue_scripts', function () {
         'ajaxUrl'  => admin_url('admin-ajax.php'),
     ]);
 
-    // HERO + SLIDER
-    wp_enqueue_script(
-        'wolfsofteure-home-js',
-        get_stylesheet_directory_uri() . '/assets/js/home.js',
-        ['wolfsofteure-main-js'],
-        filemtime(get_stylesheet_directory() . '/assets/js/home.js'),
-        true
-    );
+    if (is_front_page()) {
+        wp_enqueue_script(
+            'wolfsofteure-home-js',
+            get_stylesheet_directory_uri() . '/assets/js/home.js',
+            ['wolfsofteure-main-js'],
+            filemtime(get_stylesheet_directory() . '/assets/js/home.js'),
+            true
+        );
 
-    wp_localize_script('wolfsofteure-home-js', 'wolfsoftHome', [
-        'themeUrl' => get_stylesheet_directory_uri(),
-        'ajaxUrl'  => admin_url('admin-ajax.php'),
-    ]);
+        wp_localize_script('wolfsofteure-home-js', 'wolfsoftHome', [
+            'themeUrl' => get_stylesheet_directory_uri(),
+            'ajaxUrl'  => admin_url('admin-ajax.php'),
+        ]);
+    }
 });
 
 
@@ -697,5 +728,9 @@ add_action('after_setup_theme', function () {
 add_action('wp_enqueue_scripts', function () {
     if (is_front_page()) {
         wp_dequeue_style('woocommerce-general');
+    }
+
+    if (!function_exists('is_bbpress') || !is_bbpress()) {
+        wp_dequeue_style('bbp-default-css');
     }
 }, 100);

@@ -10,6 +10,7 @@ get_header(); ?>
 <?php // get_template_part('template-parts/slider'); 
 ?>
 
+<main id="main-content" class="site-main">
 <div class="wse-shop-container">
 
     <header class="woocommerce-products-header">
@@ -44,5 +45,6 @@ get_header(); ?>
     <?php endif; ?>
 
 </div>
+</main>
 
 <?php get_footer(); ?>

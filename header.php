@@ -10,10 +10,16 @@
 <body <?php body_class(); ?>>
     <!-- SLIDER GLOBAL (derrière tout le site) -->
     <div class="background-slider">
+        <?php
+        $background_url = wolfsofteure_background_image_url();
+        $background_name = basename($background_url, '.avif');
+        $background_base = dirname($background_url) . '/';
+        ?>
         <div
             class="background active"
             id="background-rotator"
-            style="background-image: url('<?php echo esc_url(wolfsofteure_background_image_url()); ?>')"></div>
+            data-background-image="<?php echo esc_attr($background_name); ?>"
+            style="background-image: url('<?php echo esc_url($background_base . $background_name . '.jpg'); ?>'); background-image: image-set(url('<?php echo esc_url($background_url); ?>') type('image/avif'), url('<?php echo esc_url($background_base . $background_name . '.jpg'); ?>') type('image/jpeg'))"></div>
         <div class="background" id="background-rotator-next"></div>
     </div>
 
@@ -22,8 +28,9 @@
         <picture>
             <source
                 srcset="<?php
+                    echo esc_url(get_stylesheet_directory_uri() . '/assets/images/pvc-patch-no-BG-360.webp') . ' 360w, ';
                     echo esc_url(get_stylesheet_directory_uri() . '/assets/images/pvc-patch-no-BG-540.webp') . ' 540w, ';
-                    echo esc_url(get_stylesheet_directory_uri() . '/assets/images/pvc-patch-no-BG.webp') . ' 1080w';
+                    echo esc_url(get_stylesheet_directory_uri() . '/assets/images/pvc-patch-no-BG-720.webp') . ' 720w';
                 ?>"
                 sizes="(max-width: 480px) 180px, (max-width: 768px) 240px, 340px"
                 type="image/webp">
@@ -100,8 +107,14 @@
                 <a href="<?php echo esc_url(home_url('/')); ?>" class="site-title">Wolf Soft Eure</a>
             </span>
             <div class="scar-container">
-                <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/images/scar.png'); ?>"
-                    alt="Scar" class="scar-img">
+                <picture class="scar-picture">
+                    <source
+                        srcset="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/images/scar.webp'); ?> 440w"
+                        sizes="(max-width: 480px) 115px, 220px"
+                        type="image/webp">
+                    <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/images/scar.png'); ?>"
+                        alt="Scar" class="scar-img" width="1080" height="267">
+                </picture>
 
                 <!-- Marqueur invisible du canon -->
                 <div class="canon-marker"></div>
@@ -118,7 +131,11 @@
                 ?>
                 <a class="header-cart" href="<?php echo esc_url(wc_get_cart_url()); ?>"
                     aria-label="<?php echo esc_attr(sprintf('Panier : %d article%s', $cart_count, $cart_count > 1 ? 's' : '')); ?>">
-                    <span class="cart-icon" aria-hidden="true">🛒</span>
+                    <span class="cart-icon" aria-hidden="true">
+                        <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2 3h2l2.2 10h9.1l2-7H5.1M7 16h.01M14 16h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </span>
                     <span class="cart-count"><?php echo esc_html($cart_count); ?></span>
                 </a>
             <?php endif; ?>
