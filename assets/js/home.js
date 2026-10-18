@@ -14,7 +14,12 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     const themeUrl = wolfsoftHome.themeUrl + '/assets/images/';
-    let currentIndex = Math.floor(Math.random() * images.length);
+    let currentIndex = images.findIndex(image => bg.style.backgroundImage.includes(image));
+    const hasInitialBackground = currentIndex !== -1;
+
+    if (!hasInitialBackground) {
+        currentIndex = Math.floor(Math.random() * images.length);
+    }
 
     function loadAndShow(index, attempts, isInitialImage) {
         const image = new Image();
@@ -48,5 +53,9 @@ document.addEventListener("DOMContentLoaded", () => {
         image.src = themeUrl + images[index];
     }
 
-    loadAndShow(currentIndex, 0, true);
+    if (hasInitialBackground) {
+        setTimeout(() => loadAndShow((currentIndex + 1) % images.length, 0, false), 5000);
+    } else {
+        loadAndShow(currentIndex, 0, true);
+    }
 });

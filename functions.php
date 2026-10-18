@@ -23,6 +23,26 @@ add_action('after_setup_theme', function () {
 
 add_filter('woocommerce_checkout_redirect_empty_cart', '__return_false');
 
+function wolfsofteure_home_background_url()
+{
+    return get_stylesheet_directory_uri() . '/assets/images/home-backgrounds/terrain_1.jpg';
+}
+
+add_action('wp_head', function () {
+    if (!is_front_page()) {
+        return;
+    }
+
+    printf(
+        '<link rel="preload" as="image" href="%s" fetchpriority="high">' . "\n",
+        esc_url(wolfsofteure_home_background_url())
+    );
+    printf(
+        '<meta name="description" content="%s">' . "\n",
+        esc_attr('Découvrez Wolf Soft Eure, association d’airsoft dans l’Eure : terrain, parties et communauté.')
+    );
+}, 1);
+
 add_filter('woocommerce_cart_item_name', function ($product_name, $cart_item, $cart_item_key) {
     if (!is_checkout()) {
         return $product_name;
@@ -629,3 +649,9 @@ add_action('after_setup_theme', function () {
     add_theme_support('wc-product-gallery-lightbox');
     add_theme_support('wc-product-gallery-slider');
 });
+
+add_action('wp_enqueue_scripts', function () {
+    if (is_front_page()) {
+        wp_dequeue_style('woocommerce-general');
+    }
+}, 100);

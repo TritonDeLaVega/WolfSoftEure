@@ -10,18 +10,27 @@
 <body <?php body_class(); ?>>
     <!-- SLIDER GLOBAL (derrière tout le site) -->
     <div class="background-slider">
-        <div class="background" id="background-rotator"></div>
+        <div
+            class="background<?php echo is_front_page() ? ' active' : ''; ?>"
+            id="background-rotator"
+            <?php if (is_front_page()) : ?>
+                style="background-image: url('<?php echo esc_url(wolfsofteure_home_background_url()); ?>')"
+            <?php endif; ?>></div>
         <div class="background" id="background-rotator-next"></div>
     </div>
 
     <!-- HERO (ne contient plus que le logo) -->
     <div class="hero">
-        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/pvc-patch-no-BG.png"
-            alt="Logo WSE"
-            class="logo-centered"
-            width="1080"
-            height="1004"
-            fetchpriority="high">
+        <picture>
+            <source
+                srcset="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/images/pvc-patch-no-BG.webp'); ?>"
+                type="image/webp">
+            <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/images/pvc-patch-no-BG.png'); ?>"
+                alt="Logo WSE"
+                class="logo-centered"
+                width="1080"
+                height="1004">
+        </picture>
         <?php if (is_front_page()) : ?>
             <p class="hero-subtitle">Bienvenue sur le site&nbsp;!</p>
         <?php endif; ?>
@@ -104,7 +113,8 @@
                     $cart_count = WC()->cart->get_cart_contents_count();
                 }
                 ?>
-                <a class="header-cart" href="<?php echo esc_url(wc_get_cart_url()); ?>" aria-label="Voir le panier">
+                <a class="header-cart" href="<?php echo esc_url(wc_get_cart_url()); ?>"
+                    aria-label="<?php echo esc_attr(sprintf('Panier : %d article%s', $cart_count, $cart_count > 1 ? 's' : '')); ?>">
                     <span class="cart-icon" aria-hidden="true">🛒</span>
                     <span class="cart-count"><?php echo esc_html($cart_count); ?></span>
                 </a>
