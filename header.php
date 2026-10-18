@@ -11,11 +11,9 @@
     <!-- SLIDER GLOBAL (derrière tout le site) -->
     <div class="background-slider">
         <div
-            class="background<?php echo is_front_page() ? ' active' : ''; ?>"
+            class="background active"
             id="background-rotator"
-            <?php if (is_front_page()) : ?>
-                style="background-image: url('<?php echo esc_url(wolfsofteure_home_background_url()); ?>')"
-            <?php endif; ?>></div>
+            style="background-image: url('<?php echo esc_url(wolfsofteure_background_image_url()); ?>')"></div>
         <div class="background" id="background-rotator-next"></div>
     </div>
 
@@ -23,13 +21,18 @@
     <div class="hero">
         <picture>
             <source
-                srcset="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/images/pvc-patch-no-BG.webp'); ?>"
+                srcset="<?php
+                    echo esc_url(get_stylesheet_directory_uri() . '/assets/images/pvc-patch-no-BG-540.webp') . ' 540w, ';
+                    echo esc_url(get_stylesheet_directory_uri() . '/assets/images/pvc-patch-no-BG.webp') . ' 1080w';
+                ?>"
+                sizes="(max-width: 480px) 180px, (max-width: 768px) 240px, 340px"
                 type="image/webp">
             <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/images/pvc-patch-no-BG.png'); ?>"
                 alt="Logo WSE"
                 class="logo-centered"
                 width="1080"
-                height="1004">
+                height="1004"
+                fetchpriority="high">
         </picture>
         <?php if (is_front_page()) : ?>
             <p class="hero-subtitle">Bienvenue sur le site&nbsp;!</p>
